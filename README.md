@@ -21,6 +21,8 @@ PC Setup est une application Windows 10/11 qui centralise l’installation de lo
 
 La dernière version publique est disponible dans les [Releases GitHub](../../releases/latest).
 
+Le dépôt contient uniquement les sources nécessaires à la compilation. Les utilisateurs n’ont besoin que de `PC-Setup.exe` disponible dans les Releases.
+
 L’empreinte SHA-256 est publiée avec chaque version dans `SHA256.txt`.
 
 > L’exécutable n’est pas encore signé numériquement. Windows SmartScreen peut donc afficher un avertissement lors du premier lancement.
