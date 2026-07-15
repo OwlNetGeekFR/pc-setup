@@ -1,0 +1,30 @@
+# Dépendances et téléchargements de compilation
+packages/
+*.nupkg
+*.zip
+
+# Anciennes constructions locales
+PC-Setup-v*.exe
+PC-Setup-build-*.exe
+PC-Setup-Natif.exe
+
+# Prototypes historiques non utilisés par la version WebView2
+PCSetupDesktop.cs
+PCSetupLauncher.cs
+Serveur-PC-Setup.ps1
+Ouvrir-PC-Setup.cmd
+Lancer-*.cmd
+
+# Fichiers système et éditeurs
+.vs/
+.vscode/
+bin/
+obj/
+*.user
+Thumbs.db
+.DS_Store
+
+# Configuration locale Codex
+.agents/
+.codex/
+assets/branding/pc-setup-logo-chroma.png

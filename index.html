@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>PC Setup — Installateur Windows</title>
+  <link rel="icon" href="assets/branding/pc-setup-logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <aside class="sidebar">
+    <a class="brand" href="#" aria-label="PC Setup, accueil">
+      <img class="brand-app-logo" src="assets/branding/pc-setup-logo.png" alt="" aria-hidden="true" />
+      <span><strong>PC Setup</strong><small>Windows installer</small></span>
+    </a>
+
+    <nav aria-label="Navigation">
+      <button class="nav-item" data-view="home"><span>⌂</span> Accueil</button>
+      <button class="nav-item active" data-view="catalog"><span>▦</span> Installer des logiciels</button>
+      <button class="nav-item" data-view="updates"><span>↥</span> Tout mettre à jour <b class="new-badge">NEW</b></button>
+      <button class="nav-item" data-view="cleanup"><span>◇</span> Libérer de l'espace</button>
+      <button class="nav-item" data-view="quarantine"><span>♲</span> Quarantaine <b id="quarantineNavCount">0</b></button>
+      <button class="nav-item" data-view="queue"><span>↓</span> Ma sélection <b id="navCount">0</b></button>
+      <button class="nav-item" data-view="history"><span>↻</span> Guide d'installation</button>
+    </nav>
+
+    <div class="system-card">
+      <div class="system-title"><span class="windows-icon">⊞</span><div><strong>Windows 10 / 11</strong><small>Compatible winget</small></div></div>
+      <div class="system-row"><span>Gestionnaire</span><b>winget</b></div>
+      <div class="system-row"><span>Architecture</span><b>x64 / ARM64</b></div>
+      <div class="status-pill"><i></i> Prêt à configurer</div>
+    </div>
+
+    <p class="side-note">Les logiciels sont téléchargés depuis leurs éditeurs via le gestionnaire officiel Microsoft.</p>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Ouvrir le menu">☰</button>
+      <div class="breadcrumb">PC Setup <span>/</span> <b id="currentView">Installer des logiciels</b></div>
+      <div class="secure"><span>✓</span> Sources vérifiées</div>
+    </header>
+
+    <section class="view" id="home">
+      <div class="home-hero">
+        <div class="home-copy">
+          <div class="kicker"><i></i> CENTRE DE MAINTENANCE WINDOWS</div>
+          <h1>Un PC propre,<br><em>à jour et prêt.</em></h1>
+          <p>Installez vos logiciels, mettez votre système à jour et récupérez de l'espace depuis une seule application.</p>
+          <div class="home-actions"><button class="home-primary" data-view="catalog">Commencer la configuration <span>→</span></button><button class="home-secondary" data-view="updates">Tout mettre à jour</button></div>
+        </div>
+        <div class="health-widget">
+          <div class="health-ring" id="healthRing"><div><strong id="healthScore">—</strong><small>/ 100</small></div></div>
+          <span>Santé du PC</span><b id="healthStatus">Analyse en cours...</b>
+        </div>
+      </div>
+
+      <div class="health-dashboard">
+        <article><span class="health-metric-icon blue">↥</span><div><small>MISES À JOUR</small><strong id="healthUpdates">Analyse...</strong><em id="healthUpdatesDetail">Interrogation de WinGet</em></div></article>
+        <article><span class="health-metric-icon cyan">◇</span><div><small>ESPACE DISQUE C:</small><strong id="healthDisk">Analyse...</strong><em id="healthDiskDetail">Calcul de l'espace libre</em></div></article>
+        <article><span class="health-metric-icon violet">↻</span><div><small>REDÉMARRAGE</small><strong id="healthRestart">Analyse...</strong><em>État des opérations Windows</em></div></article>
+        <article data-view="quarantine"><span class="health-metric-icon green">♲</span><div><small>QUARANTAINE</small><strong id="healthQuarantine">Analyse...</strong><em>Éléments récupérables</em></div></article>
+        <button class="health-refresh" id="refreshHealth" title="Actualiser le diagnostic">↻</button>
+      </div>
+
+      <div class="home-section-heading"><div><span class="label">OUTILS DISPONIBLES</span><h2>Que voulez-vous faire ?</h2></div><span class="local-pill">● 100 % local</span></div>
+      <div class="feature-grid">
+        <button class="feature-card install-feature" data-view="catalog">
+          <span class="feature-number">01</span><span class="feature-icon">↓</span>
+          <span class="feature-copy"><strong>Installer des logiciels</strong><small>Choisissez parmi le catalogue ou utilisez un profil prêt à l'emploi.</small><em>32 logiciels disponibles <b>→</b></em></span>
+        </button>
+        <button class="feature-card update-feature" data-view="updates">
+          <span class="feature-number">02</span><span class="feature-icon">↥</span>
+          <span class="feature-copy"><strong>Tout mettre à jour</strong><small>Applications, composants Windows et pilotes certifiés Microsoft.</small><em>Mise à jour groupée <b>→</b></em></span>
+        </button>
+        <button class="feature-card cleanup-feature" data-view="cleanup">
+          <span class="feature-number">03</span><span class="feature-icon">◇</span>
+          <span class="feature-copy"><strong>Libérer de l'espace</strong><small>Nettoyez les fichiers temporaires, caches et anciens composants.</small><em>Nettoyage personnalisable <b>→</b></em></span>
+        </button>
+        <button class="feature-card residue-feature" data-view="cleanup" data-focus-cleanup="app-leftovers">
+          <span class="feature-number">04</span><span class="feature-icon">⌫</span>
+          <span class="feature-copy"><strong>Supprimer les résidus</strong><small>Repérez les dossiers laissés par les applications désinstallées.</small><em>Quarantaine réversible <b>→</b></em></span>
+        </button>
+      </div>
+
+      <div class="home-trust">
+        <div><span>✓</span><p><strong>Sources officielles</strong><small>Installation via winget</small></p></div>
+        <div><span>✓</span><p><strong>Actions contrôlées</strong><small>Confirmation avant suppression</small></p></div>
+        <div><span>✓</span><p><strong>Aucune donnée envoyée</strong><small>Tout reste sur votre ordinateur</small></p></div>
+        <div><span>✓</span><p><strong>Rapports détaillés</strong><small>Journaux créés sur le Bureau</small></p></div>
+      </div>
+    </section>
+
+    <section class="view active" id="catalog">
+      <div class="hero">
+        <div>
+          <div class="kicker"><i></i> NOUVELLE CONFIGURATION</div>
+          <h1>Votre PC, prêt<br><em>en quelques clics.</em></h1>
+          <p>Sélectionnez vos logiciels et composants. PC Setup prépare une installation groupée, propre et sans publicités.</p>
+        </div>
+        <div class="hero-orbit" aria-hidden="true"><span>⊞</span><i class="orbit-dot dot-a"></i><i class="orbit-dot dot-b"></i></div>
+      </div>
+
+      <section class="preset-section">
+        <div class="section-heading"><div><span class="label">DÉMARRAGE RAPIDE</span><h2>Choisissez un profil</h2></div><button class="text-button" id="clearAll">Tout désélectionner</button></div>
+        <div class="presets">
+          <button class="preset" data-preset="essentiel"><span class="preset-icon blue">✦</span><span><strong>L'essentiel</strong><small>Navigateur, outils & médias</small></span><b>8 apps</b></button>
+          <button class="preset" data-preset="gaming"><span class="preset-icon violet">♟</span><span><strong>Gaming</strong><small>Launchers, chat & utilitaires</small></span><b>7 apps</b></button>
+          <button class="preset" data-preset="dev"><span class="preset-icon green">&lt;/&gt;</span><span><strong>Développeur</strong><small>Code, Git & runtimes</small></span><b>9 apps</b></button>
+        </div>
+      </section>
+
+      <section class="catalog-section">
+        <div class="catalog-tools">
+          <div class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Rechercher un logiciel..." autocomplete="off" /></div>
+          <div class="filters" id="filters"></div>
+        </div>
+        <div class="results-line"><span id="resultCount"></span><span>Cliquez sur une carte pour l'ajouter</span></div>
+        <div class="app-grid" id="appGrid"></div>
+        <div class="empty hidden" id="emptyState"><span>⌕</span><h3>Aucun logiciel trouvé</h3><p>Essayez un autre mot-clé ou une autre catégorie.</p></div>
+      </section>
+    </section>
+
+    <section class="view" id="updates">
+      <div class="page-intro update-intro">
+        <div><span class="label">MAINTENANCE WINDOWS</span><h1>Tout mettre à jour</h1><p>Applications, composants Windows et pilotes proposés par Microsoft Update, en une seule opération.</p></div>
+        <div class="update-shield" aria-hidden="true">↥</div>
+      </div>
+      <div class="update-grid">
+        <article class="update-card"><span class="update-card-icon blue">▦</span><div><strong>Logiciels installés</strong><small>Applications reconnues par winget, y compris les versions inconnues</small></div><span class="included">INCLUS</span></article>
+        <article class="update-card"><span class="update-card-icon cyan">⊞</span><div><strong>Composants Windows</strong><small>Mises à jour de sécurité et de qualité via Windows Update</small></div><span class="included">INCLUS</span></article>
+        <article class="update-card"><span class="update-card-icon violet">⚙</span><div><strong>Pilotes certifiés</strong><small>Pilotes distribués par Microsoft pour votre matériel</small></div><span class="included">INCLUS</span></article>
+      </div>
+      <div class="update-preview-panel">
+        <div class="section-heading"><div><span class="label">APERÇU DES VERSIONS</span><h2>Mises à jour disponibles</h2></div><button class="text-button" id="scanUpdatesBtn">↻ Rechercher</button></div>
+        <div class="update-scan-state" id="updateScanState"><span class="scan-spinner">↻</span><div><strong>Recherche des mises à jour</strong><small>PC Setup interroge le catalogue WinGet...</small></div></div>
+        <div class="available-updates hidden" id="availableUpdates"></div>
+        <div class="no-updates hidden" id="noUpdates"><span>✓</span><div><strong>Vos applications sont à jour</strong><small>Aucune nouvelle version détectée dans le catalogue.</small></div></div>
+      </div>
+      <div class="update-action-panel">
+        <div class="update-action-copy"><span class="status-dot"></span><div><strong id="updateReadyTitle">Analyse en cours</strong><small id="updateReadyDetail">Les versions seront affichées avant toute installation.</small></div></div>
+        <button class="install-button update-button" id="updateAllBtn" disabled><span>▶</span> Mettre à jour la sélection</button>
+      </div>
+      <div class="update-advice"><span>i</span><div><strong>Conseils avant la mise à jour</strong><p>Branchez un PC portable au secteur, sauvegardez vos documents et fermez les logiciels ouverts. Un redémarrage pourra être nécessaire.</p></div></div>
+      <div class="details-panel">
+        <div class="section-heading"><div><span class="label">DÉROULEMENT</span><h2>Ce que fera l'outil</h2></div></div>
+        <ol class="update-steps">
+          <li><b>1</b><span><strong>Contrôle administrateur</strong><small>Relance automatique avec les droits nécessaires.</small></span></li>
+          <li><b>2</b><span><strong>Mise à jour des applications</strong><small>Installation silencieuse des nouvelles versions disponibles.</small></span></li>
+          <li><b>3</b><span><strong>Windows Update</strong><small>Recherche des composants et pilotes applicables.</small></span></li>
+          <li><b>4</b><span><strong>Rapport final</strong><small>Journal enregistré sur le Bureau pour vérifier le résultat.</small></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="view" id="cleanup">
+      <div class="page-intro cleanup-intro">
+        <div><span class="label">STOCKAGE WINDOWS</span><h1>Libérer de l'espace</h1><p>Supprimez les fichiers temporaires et optimisez Windows sans toucher à vos documents personnels.</p></div>
+        <div class="cleanup-drive" aria-hidden="true"><span>◇</span><i></i></div>
+      </div>
+
+      <div class="cleanup-layout">
+        <div>
+          <div class="section-heading cleanup-heading"><div><span class="label">ÉLÉMENTS À NETTOYER</span><h2>Choisissez les catégories</h2></div><button class="text-button" id="recommendedCleanup">Sélection recommandée</button></div>
+          <div class="cleanup-options">
+            <label class="cleanup-option">
+              <input type="checkbox" data-cleanup="user-temp" checked />
+              <span class="check-ui">✓</span><span class="cleanup-icon blue">⌁</span>
+              <span class="cleanup-copy"><strong>Fichiers temporaires utilisateur</strong><small>Fichiers créés provisoirement par vos applications</small></span><em>Recommandé</em>
+            </label>
+            <label class="cleanup-option">
+              <input type="checkbox" data-cleanup="windows-temp" checked />
+              <span class="check-ui">✓</span><span class="cleanup-icon cyan">⊞</span>
+              <span class="cleanup-copy"><strong>Fichiers temporaires Windows</strong><small>Résidus système inutilisés et fichiers verrouillés ignorés</small></span><em>Recommandé</em>
+            </label>
+            <label class="cleanup-option">
+              <input type="checkbox" data-cleanup="recycle-bin" checked />
+              <span class="check-ui">✓</span><span class="cleanup-icon violet">♲</span>
+              <span class="cleanup-copy"><strong>Corbeille</strong><small>Fichiers que vous avez précédemment supprimés</small></span><em>À vérifier</em>
+            </label>
+            <label class="cleanup-option">
+              <input type="checkbox" data-cleanup="delivery" checked />
+              <span class="check-ui">✓</span><span class="cleanup-icon green">⇣</span>
+              <span class="cleanup-copy"><strong>Cache d'optimisation de livraison</strong><small>Copies locales utilisées pour distribuer les mises à jour</small></span><em>Recommandé</em>
+            </label>
+            <label class="cleanup-option">
+              <input type="checkbox" data-cleanup="components" />
+              <span class="check-ui">✓</span><span class="cleanup-icon orange">⚙</span>
+              <span class="cleanup-copy"><strong>Anciens composants Windows</strong><small>Nettoyage DISM du magasin de composants remplacés</small></span><em>Avancé</em>
+            </label>
+            <label class="cleanup-option">
+              <input type="checkbox" data-cleanup="app-leftovers" />
+              <span class="check-ui">✓</span><span class="cleanup-icon red">⌫</span>
+              <span class="cleanup-copy"><strong>Résidus d'applications désinstallées</strong><small>Recherche les anciens dossiers AppData et demande votre accord pour chacun</small></span><em>Réversible</em>
+            </label>
+          </div>
+        </div>
+
+        <aside class="cleanup-summary">
+          <span class="label">NETTOYAGE SÉCURISÉ</span>
+          <div class="space-visual"><div class="disk-ring"><strong id="cleanupCount">4</strong><small>zones</small></div></div>
+          <div class="safe-list"><span>✓ Aucun document personnel</span><span>✓ Confirmation avant suppression</span><span>✓ Résidus placés en quarantaine</span><span>✓ Rapport créé sur le Bureau</span></div>
+          <button class="install-button cleanup-button" id="cleanupBtn"><span>▶</span> Exécuter le nettoyage</button>
+          <p>L'espace récupéré dépend du contenu actuel de votre ordinateur.</p>
+        </aside>
+      </div>
+
+      <div class="danger-note"><span>!</span><div><strong>La Corbeille ne pourra pas être restaurée</strong><p>Décochez « Corbeille » si vous souhaitez vérifier son contenu avant le nettoyage.</p></div></div>
+    </section>
+
+    <section class="view" id="quarantine">
+      <div class="page-intro quarantine-intro">
+        <div><span class="label">RÉCUPÉRATION SÉCURISÉE</span><h1>Quarantaine</h1><p>Restaurez les anciens dossiers déplacés par PC Setup ou supprimez-les définitivement après vérification.</p></div>
+        <div class="quarantine-shield" aria-hidden="true">♲</div>
+      </div>
+      <div class="quarantine-toolbar"><div><strong id="quarantineCount">0 élément</strong><small>Les éléments restent sur votre Bureau tant que vous ne les supprimez pas.</small></div><button class="text-button" id="refreshQuarantine">↻ Actualiser</button></div>
+      <div class="quarantine-list" id="quarantineList"><div class="quarantine-loading"><span>↻</span> Analyse de la quarantaine...</div></div>
+      <div class="quarantine-empty hidden" id="quarantineEmpty"><span>✓</span><h3>La quarantaine est vide</h3><p>Aucun ancien dossier n'attend votre décision.</p></div>
+      <div class="danger-note"><span>!</span><div><strong>Vérifiez le fonctionnement de vos applications avant une suppression définitive</strong><p>La restauration remet le dossier à son emplacement d'origine. La suppression définitive ne pourra pas être annulée.</p></div></div>
+    </section>
+
+    <section class="view" id="queue">
+      <div class="page-intro"><span class="label">INSTALLATION GROUPÉE</span><h1>Ma sélection</h1><p>Vérifiez les éléments avant de générer votre installateur.</p></div>
+      <div class="queue-layout">
+        <div class="queue-list" id="queueList"></div>
+        <aside class="summary-card">
+          <span class="label">RÉCAPITULATIF</span><div class="summary-number"><strong id="summaryCount">0</strong><span>élément(s)<br>sélectionné(s)</span></div>
+          <div class="summary-row"><span>Téléchargement</span><b>Automatique</b></div>
+          <div class="summary-row"><span>Interaction</span><b>Silencieuse</b></div>
+          <button class="install-button" id="installBtn"><span>▶</span> Installer maintenant</button>
+          <p>PC Setup lancera l'installation dans une fenêtre PowerShell avec votre confirmation.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="history">
+      <div class="page-intro"><span class="label">MODE D'EMPLOI</span><h1>Installer en toute sécurité</h1><p>Le script utilise uniquement winget et les fonctions Windows intégrées.</p></div>
+      <div class="steps">
+        <article><b>01</b><div><h3>Composez votre sélection</h3><p>Choisissez un profil ou ajoutez les applications une à une depuis le catalogue.</p></div></article>
+        <article><b>02</b><div><h3>Générez le script</h3><p>PC Setup crée localement un fichier PowerShell lisible, sans envoyer aucune donnée.</p></div></article>
+        <article><b>03</b><div><h3>Exécutez en administrateur</h3><p>Clic droit sur le fichier, puis « Exécuter avec PowerShell ». Confirmez la demande Windows.</p></div></article>
+        <article><b>04</b><div><h3>Suivez l'installation</h3><p>Chaque étape s'affiche dans la console. Un échec n'empêche pas les autres installations.</p></div></article>
+      </div>
+      <div class="notice"><span>i</span><div><strong>Avant de commencer</strong><p>Créez un point de restauration et fermez vos applications. Certains composants peuvent demander un redémarrage.</p></div></div>
+    </section>
+  </main>
+
+  <div class="selection-bar hidden" id="selectionBar">
+    <div class="selection-stack" id="selectionStack"></div>
+    <div><strong><span id="barCount">0</span> élément(s) sélectionné(s)</strong><small>Prêt pour l'installation</small></div>
+    <button id="viewSelection">Voir ma sélection <span>→</span></button>
+  </div>
+
+  <div class="install-modal hidden" id="installModal" role="dialog" aria-modal="true" aria-labelledby="installModalTitle">
+    <div class="install-dialog">
+      <div class="dialog-glow"></div>
+      <div class="dialog-header"><span class="dialog-logo">↓</span><div><span class="label">INSTALLATION GROUPÉE</span><h2 id="installModalTitle">Prêt à installer</h2></div><button class="dialog-close" id="closeInstallModal" aria-label="Fermer">×</button></div>
+      <div class="dialog-confirm" id="installConfirmView">
+        <p><strong id="modalAppCount">0 logiciel</strong> seront installés depuis les sources officielles winget.</p>
+        <div class="dialog-checks"><span>✓ Téléchargement automatique</span><span>✓ Installation silencieuse</span><span>✓ Rapport enregistré sur le Bureau</span></div>
+        <div class="dialog-warning"><span>i</span> Fermez les applications concernées avant de continuer.</div>
+        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelInstall">Annuler</button><button class="primary-dialog-button" id="confirmInstall"><span>▶</span> Commencer l'installation</button></div>
+      </div>
+      <div class="dialog-progress hidden" id="installProgressView">
+        <div class="progress-status"><span class="pulse-dot"></span><div><strong id="progressTitle">Préparation...</strong><small id="progressDetail">Initialisation de winget</small></div><b id="progressPercent">0%</b></div>
+        <div class="progress-track"><i id="progressBar"></i></div>
+        <div class="current-package"><span class="package-icon">↓</span><div><small>LOGICIEL EN COURS</small><strong id="currentPackage">En attente...</strong></div><span id="packageResult">—</span></div>
+        <div class="progress-summary" id="progressSummary">Ne fermez pas PC Setup pendant l'installation.</div>
+        <button class="primary-dialog-button hidden" id="finishInstall">Terminer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="install-modal hidden" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateModalTitle">
+    <div class="install-dialog update-dialog">
+      <div class="dialog-glow update-dialog-glow"></div>
+      <div class="dialog-header"><span class="dialog-logo update-dialog-logo">↥</span><div><span class="label">MAINTENANCE WINDOWS</span><h2 id="updateModalTitle">Tout mettre à jour</h2></div><button class="dialog-close" id="closeUpdateModal" aria-label="Fermer">×</button></div>
+      <div class="dialog-confirm" id="updateConfirmView">
+        <p>PC Setup va installer <strong id="updateModalCount">0 application</strong> sélectionnée(s), puis lancer la recherche des composants Windows et pilotes.</p>
+        <div class="update-confirm-list"><span><b>1</b> Applications WinGet</span><span><b>2</b> Composants Windows</span><span><b>3</b> Pilotes certifiés</span></div>
+        <div class="dialog-warning"><span>i</span> Fermez les logiciels ouverts et branchez votre PC au secteur.</div>
+        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelUpdate">Annuler</button><button class="primary-dialog-button update-confirm-button" id="confirmUpdate"><span>▶</span> Lancer la mise à jour</button></div>
+      </div>
+      <div class="dialog-progress hidden" id="updateProgressView">
+        <div class="progress-status"><span class="pulse-dot update-pulse"></span><div><strong id="updateProgressTitle">Préparation...</strong><small id="updateProgressDetail">Initialisation du gestionnaire de mises à jour</small></div><b id="updateProgressPercent">0%</b></div>
+        <div class="progress-track update-progress-track"><i id="updateProgressBar"></i></div>
+        <div class="update-progress-steps">
+          <div data-update-step="sources"><span>1</span><div><strong>Sources</strong><small>Catalogue WinGet</small></div></div>
+          <div data-update-step="applications"><span>2</span><div><strong>Applications</strong><small>Nouvelles versions</small></div></div>
+          <div data-update-step="windows"><span>3</span><div><strong>Windows Update</strong><small>Composants et pilotes</small></div></div>
+        </div>
+        <div class="progress-summary" id="updateSummary">Ne fermez pas PC Setup pendant la mise à jour.</div>
+        <button class="primary-dialog-button hidden" id="finishUpdate">Terminer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="install-modal hidden" id="cleanupModal" role="dialog" aria-modal="true" aria-labelledby="cleanupModalTitle">
+    <div class="install-dialog cleanup-dialog">
+      <div class="dialog-glow cleanup-dialog-glow"></div>
+      <div class="dialog-header"><span class="dialog-logo cleanup-dialog-logo">◇</span><div><span class="label">ENTRETIEN DU DISQUE</span><h2 id="cleanupModalTitle">Libérer de l'espace</h2></div><button class="dialog-close" id="closeCleanupModal" aria-label="Fermer">×</button></div>
+      <div class="dialog-confirm" id="cleanupConfirmView">
+        <p><strong id="cleanupModalCount">0 zone</strong> seront nettoyées. Vos documents personnels et votre dossier Téléchargements ne seront pas touchés.</p>
+        <div class="cleanup-confirm-card"><span>◇</span><div><strong>Nettoyage sécurisé</strong><small id="cleanupModalDetail">Fichiers temporaires et caches sélectionnés</small></div></div>
+        <div class="dialog-warning cleanup-dialog-warning"><span>i</span> La Corbeille sera vidée si elle fait partie de votre sélection. Les résidus d'applications seront placés en quarantaine.</div>
+        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelCleanup">Annuler</button><button class="primary-dialog-button cleanup-confirm-button" id="confirmCleanup"><span>▶</span> Commencer le nettoyage</button></div>
+      </div>
+      <div class="dialog-progress hidden" id="cleanupProgressView">
+        <div class="progress-status"><span class="pulse-dot cleanup-pulse"></span><div><strong id="cleanupProgressTitle">Préparation...</strong><small id="cleanupProgressDetail">Analyse des zones sélectionnées</small></div><b id="cleanupProgressPercent">0%</b></div>
+        <div class="progress-track cleanup-progress-track"><i id="cleanupProgressBar"></i></div>
+        <div class="cleanup-current-zone"><span id="cleanupZoneIcon">◇</span><div><small>ZONE EN COURS</small><strong id="cleanupCurrentZone">Initialisation...</strong></div><b id="cleanupZonePosition">—</b></div>
+        <div class="cleanup-result-card hidden" id="cleanupResultCard"><span>✓</span><div><small>ESPACE RÉCUPÉRÉ</small><strong id="cleanupRecovered">0 Go</strong></div></div>
+        <div class="progress-summary" id="cleanupSummaryText">Ne fermez pas PC Setup pendant le nettoyage.</div>
+        <button class="primary-dialog-button hidden" id="finishCleanup">Terminer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="install-modal hidden" id="uninstallModal" role="dialog" aria-modal="true" aria-labelledby="uninstallTitle">
+    <div class="install-dialog uninstall-dialog">
+      <div class="dialog-header"><span class="dialog-logo uninstall-logo">×</span><div><span class="label">GESTION DU LOGICIEL</span><h2 id="uninstallTitle">Désinstaller</h2></div><button class="dialog-close" id="closeUninstallModal">×</button></div>
+      <div class="dialog-confirm" id="uninstallConfirmView">
+        <p>Vous êtes sur le point de désinstaller <strong id="uninstallAppName"></strong>.</p>
+        <div class="dialog-warning danger-dialog-warning"><span>!</span> Les réglages locaux du logiciel peuvent également être supprimés.</div>
+        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelUninstall">Annuler</button><button class="danger-dialog-button" id="confirmUninstall"><span>×</span> Désinstaller</button></div>
+      </div>
+      <div class="dialog-progress hidden" id="uninstallProgressView">
+        <div class="progress-status"><span class="pulse-dot danger-pulse"></span><div><strong id="uninstallProgressTitle">Désinstallation en cours</strong><small id="uninstallProgressDetail">Veuillez patienter...</small></div></div>
+        <div class="progress-track danger-track"><i id="uninstallProgressBar"></i></div>
+        <div class="progress-summary" id="uninstallSummary">Ne fermez pas PC Setup pendant l'opération.</div>
+        <button class="primary-dialog-button hidden" id="finishUninstall">Terminer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"><span>✓</span><div><strong id="toastTitle">Ajouté à la sélection</strong><small id="toastText"></small></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
