@@ -60,3 +60,9 @@ Le script télécharge le package Microsoft WebView2 nécessaire, compile l’ap
 ## Avertissement
 
 PC Setup modifie des logiciels et certaines zones système. Vérifiez les sélections proposées, sauvegardez les documents importants et conservez la quarantaine quelques jours avant toute suppression définitive.
+
+## Licence
+
+Le code source de PC Setup est distribué gratuitement sous [licence MIT](LICENSE). Copyright © 2026 OwlNetGeekFR.
+
+Les noms, marques et logos des applications proposées dans le catalogue restent la propriété de leurs éditeurs respectifs.
