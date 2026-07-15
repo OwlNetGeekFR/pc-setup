@@ -22,8 +22,9 @@ $choices = if ($ChoicesFile -and (Test-Path -LiteralPath $ChoicesFile)) {
 if ($ChoicesFile) { Remove-Item -LiteralPath $ChoicesFile -Force -ErrorAction SilentlyContinue }
 
 $Host.UI.RawUI.WindowTitle = "PC Setup - Nettoyage du disque"
-$desktop = [Environment]::GetFolderPath("Desktop")
-$log = if ($LogPath) { $LogPath } else { Join-Path $desktop ("PC-Setup-Nettoyage-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log") }
+$logs = Join-Path $env:LOCALAPPDATA "PCSetup\Logs"
+New-Item -ItemType Directory -Path $logs -Force | Out-Null
+$log = if ($LogPath) { $LogPath } else { Join-Path $logs ("PC-Setup-Nettoyage-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log") }
 Start-Transcript -Path $log -Force
 
 function Run-Step([string]$Label, [scriptblock]$Action) {

@@ -225,8 +225,9 @@ if (-not $isAdmin) {
 }
 
 $Host.UI.RawUI.WindowTitle = "PC Setup - Mise a jour complete"
-$desktop = [Environment]::GetFolderPath("Desktop")
-$log = Join-Path $desktop ("PC-Setup-Update-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log")
+$logs = Join-Path $env:LOCALAPPDATA "PCSetup\Logs"
+New-Item -ItemType Directory -Path $logs -Force | Out-Null
+$log = Join-Path $logs ("PC-Setup-Update-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log")
 Start-Transcript -Path $log -Force
 
 Write-Host "PC SETUP - MISE A JOUR COMPLETE" -ForegroundColor Cyan
@@ -291,8 +292,12 @@ if (-not $isAdmin) {
 }
 
 $Host.UI.RawUI.WindowTitle = "PC Setup - Nettoyage du disque"
-$desktop = [Environment]::GetFolderPath("Desktop")
-$log = Join-Path $desktop ("PC-Setup-Nettoyage-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log")
+$dataRoot = Join-Path $env:LOCALAPPDATA "PCSetup"
+$logs = Join-Path $dataRoot "Logs"
+$quarantineRoot = Join-Path $dataRoot "Quarantine"
+New-Item -ItemType Directory -Path $logs -Force | Out-Null
+New-Item -ItemType Directory -Path $quarantineRoot -Force | Out-Null
+$log = Join-Path $logs ("PC-Setup-Nettoyage-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log")
 Start-Transcript -Path $log -Force
 
 function Run-Step([string]$Label, [scriptblock]$Action) {
@@ -323,7 +328,7 @@ function Find-AppLeftovers {
   $installed = Get-ItemProperty $uninstallKeys -ErrorAction SilentlyContinue | Where-Object DisplayName | ForEach-Object { Normalize-AppName $_.DisplayName }
   $protected = @("packages","microsoft","temp","crashdumps","d3dscache","history","inetcache","cookies","virtualstore","applicationdata","localsettings","connecteddevicesplatform","comms")
   $roots = @($env:LOCALAPPDATA, $env:APPDATA, $env:PROGRAMDATA) | Select-Object -Unique
-  $quarantine = Join-Path $desktop ("PC-Setup-Quarantaine-" + (Get-Date -Format "yyyy-MM-dd-HHmm"))
+  $quarantine = Join-Path $quarantineRoot ("PC-Setup-Quarantaine-" + (Get-Date -Format "yyyy-MM-dd-HHmm"))
   $moved = 0
 
   foreach ($root in $roots) {
@@ -695,7 +700,7 @@ function handleInstallMessage(message) {
     $("#cleanupCurrentZone").closest(".cleanup-current-zone").classList.add("hidden");
     $("#cleanupResultCard").classList.remove("hidden");
     $("#cleanupRecovered").textContent = `${message.recovered || "0"} Go`;
-    $("#cleanupSummaryText").textContent = `Rapport enregistré sur le Bureau : ${message.logName}`;
+    $("#cleanupSummaryText").textContent = `Rapport rangé dans PC Setup : ${message.logName}`;
     $("#finishCleanup").classList.remove("hidden");
     requestHealth(); requestQuarantine();
     return;
@@ -743,7 +748,7 @@ function handleInstallMessage(message) {
     $("#uninstallProgressBar").style.width = "100%";
     $("#uninstallProgressTitle").textContent = message.success ? "Logiciel désinstallé" : "Désinstallation à vérifier";
     $("#uninstallProgressDetail").textContent = message.success ? "L'application a été supprimée." : `Code de sortie : ${message.code}`;
-    $("#uninstallSummary").textContent = message.success ? "La carte a été actualisée automatiquement." : "Consultez le rapport créé sur le Bureau.";
+    $("#uninstallSummary").textContent = message.success ? "La carte a été actualisée automatiquement." : "Consultez le rapport rangé dans PC Setup.";
     $("#finishUninstall").classList.remove("hidden");
     if (message.success) { installedApps.delete(message.id); renderApps(); }
     requestHealth();
@@ -775,7 +780,7 @@ function handleInstallMessage(message) {
     $("#progressDetail").textContent = `${message.success} réussi(s), ${message.failed} à vérifier`;
     $("#progressPercent").textContent = "100%";
     $("#progressBar").style.width = "100%";
-    $("#progressSummary").textContent = `Rapport enregistré sur le Bureau : ${message.logName}`;
+    $("#progressSummary").textContent = `Rapport rangé dans PC Setup : ${message.logName}`;
     $("#finishInstall").classList.remove("hidden");
     requestHealth();
   }

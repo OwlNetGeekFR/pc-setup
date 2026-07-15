@@ -10,10 +10,14 @@ if (-not $isAdmin) {
 }
 
 $Host.UI.RawUI.WindowTitle = "PC Setup - Residus d'applications"
-$desktop = [Environment]::GetFolderPath("Desktop")
 $stamp = Get-Date -Format "yyyy-MM-dd-HHmm"
-$log = Join-Path $desktop "PC-Setup-Residus-$stamp.log"
-$quarantine = Join-Path $desktop "PC-Setup-Quarantaine-$stamp"
+$dataRoot = Join-Path $env:LOCALAPPDATA "PCSetup"
+$logs = Join-Path $dataRoot "Logs"
+$quarantineRoot = Join-Path $dataRoot "Quarantine"
+New-Item -ItemType Directory -Path $logs -Force | Out-Null
+New-Item -ItemType Directory -Path $quarantineRoot -Force | Out-Null
+$log = Join-Path $logs "PC-Setup-Residus-$stamp.log"
+$quarantine = Join-Path $quarantineRoot "PC-Setup-Quarantaine-$stamp"
 if (-not $Integrated) { Start-Transcript -Path $log -Force }
 
 function Normalize-AppName([string]$Value) {

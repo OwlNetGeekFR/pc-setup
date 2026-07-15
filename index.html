@@ -91,7 +91,7 @@
         <div><span>✓</span><p><strong>Sources officielles</strong><small>Installation via winget</small></p></div>
         <div><span>✓</span><p><strong>Actions contrôlées</strong><small>Confirmation avant suppression</small></p></div>
         <div><span>✓</span><p><strong>Aucune donnée envoyée</strong><small>Tout reste sur votre ordinateur</small></p></div>
-        <div><span>✓</span><p><strong>Rapports détaillés</strong><small>Journaux créés sur le Bureau</small></p></div>
+        <div><span>✓</span><p><strong>Rapports détaillés</strong><small>Journaux rangés dans PC Setup</small></p></div>
       </div>
     </section>
 
@@ -152,7 +152,7 @@
           <li><b>1</b><span><strong>Contrôle administrateur</strong><small>Relance automatique avec les droits nécessaires.</small></span></li>
           <li><b>2</b><span><strong>Mise à jour des applications</strong><small>Installation silencieuse des nouvelles versions disponibles.</small></span></li>
           <li><b>3</b><span><strong>Windows Update</strong><small>Recherche des composants et pilotes applicables.</small></span></li>
-          <li><b>4</b><span><strong>Rapport final</strong><small>Journal enregistré sur le Bureau pour vérifier le résultat.</small></span></li>
+          <li><b>4</b><span><strong>Rapport final</strong><small>Journal conservé dans le dossier local de PC Setup.</small></span></li>
         </ol>
       </div>
     </section>
@@ -203,7 +203,7 @@
         <aside class="cleanup-summary">
           <span class="label">NETTOYAGE SÉCURISÉ</span>
           <div class="space-visual"><div class="disk-ring"><strong id="cleanupCount">4</strong><small>zones</small></div></div>
-          <div class="safe-list"><span>✓ Aucun document personnel</span><span>✓ Confirmation avant suppression</span><span>✓ Résidus placés en quarantaine</span><span>✓ Rapport créé sur le Bureau</span></div>
+          <div class="safe-list"><span>✓ Aucun document personnel</span><span>✓ Confirmation avant suppression</span><span>✓ Résidus placés en quarantaine</span><span>✓ Aucun fichier ajouté au Bureau</span></div>
           <button class="install-button cleanup-button" id="cleanupBtn"><span>▶</span> Exécuter le nettoyage</button>
           <p>L'espace récupéré dépend du contenu actuel de votre ordinateur.</p>
         </aside>
@@ -217,7 +217,7 @@
         <div><span class="label">RÉCUPÉRATION SÉCURISÉE</span><h1>Quarantaine</h1><p>Restaurez les anciens dossiers déplacés par PC Setup ou supprimez-les définitivement après vérification.</p></div>
         <div class="quarantine-shield" aria-hidden="true">♲</div>
       </div>
-      <div class="quarantine-toolbar"><div><strong id="quarantineCount">0 élément</strong><small>Les éléments restent sur votre Bureau tant que vous ne les supprimez pas.</small></div><button class="text-button" id="refreshQuarantine">↻ Actualiser</button></div>
+      <div class="quarantine-toolbar"><div><strong id="quarantineCount">0 élément</strong><small>Les éléments sont conservés dans le dossier local sécurisé de PC Setup.</small></div><button class="text-button" id="refreshQuarantine">↻ Actualiser</button></div>
       <div class="quarantine-list" id="quarantineList"><div class="quarantine-loading"><span>↻</span> Analyse de la quarantaine...</div></div>
       <div class="quarantine-empty hidden" id="quarantineEmpty"><span>✓</span><h3>La quarantaine est vide</h3><p>Aucun ancien dossier n'attend votre décision.</p></div>
       <div class="danger-note"><span>!</span><div><strong>Vérifiez le fonctionnement de vos applications avant une suppression définitive</strong><p>La restauration remet le dossier à son emplacement d'origine. La suppression définitive ne pourra pas être annulée.</p></div></div>
@@ -261,7 +261,7 @@
       <div class="dialog-header"><span class="dialog-logo">↓</span><div><span class="label">INSTALLATION GROUPÉE</span><h2 id="installModalTitle">Prêt à installer</h2></div><button class="dialog-close" id="closeInstallModal" aria-label="Fermer">×</button></div>
       <div class="dialog-confirm" id="installConfirmView">
         <p><strong id="modalAppCount">0 logiciel</strong> seront installés depuis les sources officielles winget.</p>
-        <div class="dialog-checks"><span>✓ Téléchargement automatique</span><span>✓ Installation silencieuse</span><span>✓ Rapport enregistré sur le Bureau</span></div>
+        <div class="dialog-checks"><span>✓ Téléchargement automatique</span><span>✓ Installation silencieuse</span><span>✓ Rapport rangé dans PC Setup</span></div>
         <div class="dialog-warning"><span>i</span> Fermez les applications concernées avant de continuer.</div>
         <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelInstall">Annuler</button><button class="primary-dialog-button" id="confirmInstall"><span>▶</span> Commencer l'installation</button></div>
       </div>

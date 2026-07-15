@@ -22,8 +22,8 @@ using Microsoft.Web.WebView2.WinForms;
 [assembly: AssemblyProduct("PC Setup")]
 [assembly: AssemblyDescription("Installation, mise a jour et entretien de Windows")]
 [assembly: AssemblyCompany("PC Setup")]
-[assembly: AssemblyVersion("3.1.0.0")]
-[assembly: AssemblyFileVersion("3.1.0.0")]
+[assembly: AssemblyVersion("3.1.1.0")]
+[assembly: AssemblyFileVersion("3.1.1.0")]
 
 internal sealed class WebAppForm : Form
 {
@@ -136,7 +136,7 @@ internal sealed class WebAppForm : Form
             int success=0, failed=0;
             var report=new StringBuilder();
             string logName="PC-Setup-Installation-"+DateTime.Now.ToString("yyyy-MM-dd-HHmm")+".log";
-            string logPath=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),logName);
+            string logPath=Path.Combine(GetDataFolder("Logs"),logName);
             try
             {
                 report.AppendLine("PC SETUP - RAPPORT D'INSTALLATION");
@@ -244,7 +244,7 @@ internal sealed class WebAppForm : Form
         Task.Run(delegate {
             var report=new StringBuilder();
             string logName="PC-Setup-Desinstallation-"+DateTime.Now.ToString("yyyy-MM-dd-HHmm")+".log";
-            string logPath=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),logName);
+            string logPath=Path.Combine(GetDataFolder("Logs"),logName);
             int code=-1;
             bool success=false;
             try
@@ -282,7 +282,7 @@ internal sealed class WebAppForm : Form
         Task.Run(delegate {
             var report=new StringBuilder();
             string logName="PC-Setup-Mise-a-jour-"+DateTime.Now.ToString("yyyy-MM-dd-HHmm")+".log";
-            string logPath=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),logName);
+            string logPath=Path.Combine(GetDataFolder("Logs"),logName);
             int failed=0, lastCode=0;
             bool windowsStarted=false;
             try
@@ -426,11 +426,18 @@ internal sealed class WebAppForm : Form
         return false;
     }
 
+    string GetDataFolder(string name)
+    {
+        string folder=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"PCSetup",name);
+        Directory.CreateDirectory(folder);
+        return folder;
+    }
+
     List<Dictionary<string,object>> BuildQuarantineItems()
     {
         var items=new List<Dictionary<string,object>>();
-        string desktop=Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        foreach(string batchPath in Directory.GetDirectories(desktop,"PC-Setup-Quarantaine-*",SearchOption.TopDirectoryOnly))
+        string quarantineRoot=GetDataFolder("Quarantine");
+        foreach(string batchPath in Directory.GetDirectories(quarantineRoot,"PC-Setup-Quarantaine-*",SearchOption.TopDirectoryOnly))
         {
             foreach(string itemPath in Directory.GetDirectories(batchPath,"*",SearchOption.TopDirectoryOnly))
             {
@@ -454,10 +461,10 @@ internal sealed class WebAppForm : Form
         string batch=payload!=null && payload.ContainsKey("batch")?Convert.ToString(payload["batch"]):"";
         string item=payload!=null && payload.ContainsKey("item")?Convert.ToString(payload["item"]):"";
         if(Path.GetFileName(batch)!=batch || Path.GetFileName(item)!=item || !batch.StartsWith("PC-Setup-Quarantaine-",StringComparison.Ordinal))throw new InvalidOperationException("Élément de quarantaine invalide.");
-        string desktop=Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory))+Path.DirectorySeparatorChar;
-        batchPath=Path.GetFullPath(Path.Combine(desktop,batch));
+        string quarantineRoot=Path.GetFullPath(GetDataFolder("Quarantine"))+Path.DirectorySeparatorChar;
+        batchPath=Path.GetFullPath(Path.Combine(quarantineRoot,batch));
         string itemPath=Path.GetFullPath(Path.Combine(batchPath,item));
-        if(!batchPath.StartsWith(desktop,StringComparison.OrdinalIgnoreCase) || !itemPath.StartsWith(batchPath+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase) || !Directory.Exists(itemPath))throw new InvalidOperationException("Élément de quarantaine introuvable.");
+        if(!batchPath.StartsWith(quarantineRoot,StringComparison.OrdinalIgnoreCase) || !itemPath.StartsWith(batchPath+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase) || !Directory.Exists(itemPath))throw new InvalidOperationException("Élément de quarantaine introuvable.");
         return itemPath;
     }
 
@@ -644,7 +651,7 @@ internal sealed class WebAppForm : Form
             string recovered="0";
             int code=-1;
             string logName="PC-Setup-Nettoyage-"+DateTime.Now.ToString("yyyy-MM-dd-HHmm")+".log";
-            string logPath=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),logName);
+            string logPath=Path.Combine(GetDataFolder("Logs"),logName);
             try
             {
                 string script=Path.Combine(appRoot,"Liberer-espace-disque.ps1");
@@ -710,6 +717,36 @@ internal static class Bootstrap
     internal static string AppRoot;
     static string RuntimeRoot;
 
+    static void MigrateDesktopArtifacts()
+    {
+        string desktop=Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        string dataRoot=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"PCSetup");
+        string logs=Path.Combine(dataRoot,"Logs");
+        string quarantine=Path.Combine(dataRoot,"Quarantine");
+        Directory.CreateDirectory(logs);
+        Directory.CreateDirectory(quarantine);
+        foreach(string file in Directory.GetFiles(desktop,"PC-Setup-*.log",SearchOption.TopDirectoryOnly))
+        {
+            try
+            {
+                string destination=Path.Combine(logs,Path.GetFileName(file));
+                if(File.Exists(destination))destination=Path.Combine(logs,Path.GetFileNameWithoutExtension(file)+"-"+Guid.NewGuid().ToString("N").Substring(0,6)+".log");
+                File.Move(file,destination);
+            }
+            catch { }
+        }
+        foreach(string folder in Directory.GetDirectories(desktop,"PC-Setup-Quarantaine-*",SearchOption.TopDirectoryOnly))
+        {
+            try
+            {
+                string destination=Path.Combine(quarantine,Path.GetFileName(folder));
+                if(Directory.Exists(destination))destination+="-"+Guid.NewGuid().ToString("N").Substring(0,6);
+                Directory.Move(folder,destination);
+            }
+            catch { }
+        }
+    }
+
     [DllImport("kernel32", CharSet=CharSet.Unicode, SetLastError=true)]
     static extern bool SetDllDirectory(string lpPathName);
 
@@ -722,6 +759,7 @@ internal static class Bootstrap
             RuntimeRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PCSetup", "Runtime");
             Directory.CreateDirectory(AppRoot);
             Directory.CreateDirectory(RuntimeRoot);
+            MigrateDesktopArtifacts();
             Directory.CreateDirectory(Path.Combine(AppRoot,"assets","branding"));
             Extract("index.html", Path.Combine(AppRoot, "index.html"));
             Extract("app.js", Path.Combine(AppRoot, "app.js"));

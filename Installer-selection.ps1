@@ -19,8 +19,9 @@ $packages = @($rawPackages) |
 if ($PackagesFile) { Remove-Item -LiteralPath $PackagesFile -Force -ErrorAction SilentlyContinue }
 
 if (@($packages).Count -eq 0) { Write-Host "Aucun logiciel valide." -ForegroundColor Red; Read-Host "Entree pour fermer"; exit 1 }
-$desktop = [Environment]::GetFolderPath("Desktop")
-$log = Join-Path $desktop ("PC-Setup-Installation-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log")
+$logs = Join-Path $env:LOCALAPPDATA "PCSetup\Logs"
+New-Item -ItemType Directory -Path $logs -Force | Out-Null
+$log = Join-Path $logs ("PC-Setup-Installation-" + (Get-Date -Format "yyyy-MM-dd-HHmm") + ".log")
 Start-Transcript -Path $log -Force
 $Host.UI.RawUI.WindowTitle = "PC Setup - Installation"
 
