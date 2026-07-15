@@ -26,6 +26,8 @@ La dernière version publique est disponible dans les [Releases GitHub](../../re
 
 Le dépôt contient uniquement les sources nécessaires à la compilation. Les utilisateurs n’ont besoin que de `PC-Setup.exe` disponible dans les Releases.
 
+La signature de code des futures versions signées sera fournie gratuitement par [SignPath.io](https://signpath.io/), avec un certificat délivré par la [SignPath Foundation](https://signpath.org/).
+
 L’empreinte SHA-256 est publiée avec chaque version dans `SHA256.txt`.
 
 > L’exécutable n’est pas encore signé numériquement. Windows SmartScreen peut donc afficher un avertissement lors du premier lancement.
@@ -66,3 +68,5 @@ PC Setup modifie des logiciels et certaines zones système. Vérifiez les sélec
 Le code source de PC Setup est distribué gratuitement sous [licence MIT](LICENSE). Copyright © 2026 OwlNetGeekFR.
 
 Les noms, marques et logos des applications proposées dans le catalogue restent la propriété de leurs éditeurs respectifs.
+
+Consultez également la [politique de confidentialité](PRIVACY.md).
