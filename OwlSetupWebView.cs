@@ -1227,6 +1227,7 @@ internal sealed class WebAppForm : Form
             string logPath=Path.Combine(GetDataFolder("Logs"),logName);
             int failed=0, lastCode=0, failedCode=0;
             string lastOutput="",failedOutput="";
+            var remaining=new List<Dictionary<string,object>>();
             bool windowsStarted=false;
             try
             {
@@ -1248,6 +1249,15 @@ internal sealed class WebAppForm : Form
                     if(lastCode!=0){failed++;failedCode=lastCode;failedOutput=lastOutput;}
                 }
 
+                SendToWeb(new { type="update-stage", stage="applications", percent=80, title="Vérification des applications", detail="Contrôle des versions après installation" });
+                var selectedIds=new HashSet<string>(packages,StringComparer.OrdinalIgnoreCase);
+                remaining=QueryAvailableUpdates().Where(item=>selectedIds.Contains(Convert.ToString(item["id"]))).ToList();
+                if(remaining.Count>0)
+                {
+                    report.AppendLine();
+                    report.AppendLine("MISES A JOUR ENCORE PROPOSEES : "+String.Join(", ",remaining.Select(item=>Convert.ToString(item["id"]))));
+                }
+
                 SendToWeb(new { type="update-stage", stage="windows", percent=84, title="Recherche Windows Update", detail="Composants Windows et pilotes certifiés" });
                 windowsStarted=TriggerWindowsUpdate(report);
             }
@@ -1258,11 +1268,19 @@ internal sealed class WebAppForm : Form
             }
             finally
             {
-                bool appsSuccess=failed==0;
+                bool appsSuccess=failed==0 && remaining.Count==0;
                 bool success=appsSuccess && windowsStarted;
+                string errorMessage="";
+                if(failed>0)errorMessage=ExplainWingetFailure(failedCode,failedOutput,"mise a jour");
+                else if(remaining.Count>0)
+                {
+                    bool edgePending=remaining.Any(item=>String.Equals(Convert.ToString(item["id"]),"Microsoft.Edge",StringComparison.OrdinalIgnoreCase));
+                    string names=String.Join(", ",remaining.Select(item=>Convert.ToString(item["name"])).ToArray());
+                    errorMessage=edgePending?"Microsoft Edge est encore proposé. Fermez toutes les fenêtres Edge, attendez quelques secondes puis relancez la mise à jour.":"Toujours proposé après installation : "+names+". Fermez les applications concernées puis relancez la mise à jour.";
+                }
                 try { File.WriteAllText(logPath,report.ToString(),Encoding.UTF8); } catch { }
                 updateRunning=false;
-                SendToWeb(new { type="update-complete", success=success, appsSuccess=appsSuccess, windowsStarted=windowsStarted, code=appsSuccess?lastCode:failedCode, errorMessage=appsSuccess?"":ExplainWingetFailure(failedCode,failedOutput,"mise a jour"), logName=logName });
+                SendToWeb(new { type="update-complete", success=success, appsSuccess=appsSuccess, windowsStarted=windowsStarted, pendingCount=remaining.Count, code=appsSuccess?lastCode:failedCode, errorMessage=errorMessage, logName=logName });
             }
         });
     }
