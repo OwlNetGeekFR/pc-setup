@@ -8,6 +8,7 @@ PC-Setup-v*.exe
 PC-Setup-build-*.exe
 PC-Setup-Natif.exe
 PC-Setup.exe
+OwlSetup.exe
 artifacts/
 
 # Prototypes historiques non utilisés par la version WebView2
@@ -36,3 +37,5 @@ assets/branding/pc-setup-logo.png
 site/
 PC-Setup-Site/
 PC-Setup-Site.zip
+OwlSetup-Site/
+OwlSetup-Site.zip

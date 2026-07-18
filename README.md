@@ -30,7 +30,7 @@ OwlSetup est une application Windows 10/11 qui centralise l’installation de lo
 
 La dernière version publique est disponible dans les [Releases GitHub](../../releases/latest).
 
-Le dépôt contient uniquement les sources nécessaires à la compilation. Les utilisateurs n’ont besoin que de `OwlSetup.exe` disponible dans les Releases.
+Le dépôt contient uniquement les sources nécessaires à la compilation. Pour une installation normale, utilisez `OwlSetup-Setup.exe` depuis les Releases. `OwlSetup.exe` reste disponible comme version portable.
 
 La signature de code des futures versions signées sera fournie gratuitement par [SignPath.io](https://signpath.io/), avec un certificat délivré par la [SignPath Foundation](https://signpath.org/).
 
@@ -55,6 +55,14 @@ Depuis Windows PowerShell :
 ```
 
 Le script télécharge le package Microsoft WebView2 nécessaire, compile l’application avec le compilateur .NET Framework de Windows et produit `OwlSetup.exe`.
+
+Pour créer le véritable installateur utilisateur avec Inno Setup 6 :
+
+```powershell
+./build-installer.ps1 -Version 3.4.1
+```
+
+L'installateur place OwlSetup dans `%LOCALAPPDATA%\Programs\OwlSetup`, crée le raccourci du Menu Démarrer et enregistre la désinstallation dans Windows.
 
 ### Tester une bêta avant publication
 

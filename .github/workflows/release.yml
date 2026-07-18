@@ -4,6 +4,11 @@ on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Version à publier (par exemple 3.4.1)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -11,21 +16,36 @@ permissions:
 jobs:
   release:
     runs-on: windows-latest
+    env:
+      RELEASE_VERSION: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.ref_name }}
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
     steps:
       - uses: actions/checkout@v6
       - name: Compiler OwlSetup
         shell: powershell
         run: |
-          $version = "${{ github.ref_name }}".TrimStart("v")
+          $version = "$env:RELEASE_VERSION".TrimStart("v")
           ./build.ps1 -AppVersion $version -Channel stable
+      - name: Installer Inno Setup
+        shell: powershell
+        run: choco install innosetup --no-progress --yes
+      - name: Compiler l'installateur utilisateur
+        shell: powershell
+        run: |
+          $version = "$env:RELEASE_VERSION".TrimStart("v")
+          ./build-installer.ps1 -Version $version -SkipApplicationBuild
       - name: Créer l'empreinte SHA-256
         shell: powershell
         run: |
           Copy-Item OwlSetup.exe PC-Setup.exe
-          $hash = (Get-FileHash OwlSetup.exe -Algorithm SHA256).Hash
-          "$hash  OwlSetup.exe" | Set-Content SHA256.txt -Encoding ascii
+          Copy-Item artifacts/installer/OwlSetup-Setup.exe OwlSetup-Setup.exe
+          @(
+            "$(Get-FileHash OwlSetup-Setup.exe -Algorithm SHA256 | Select-Object -ExpandProperty Hash)  OwlSetup-Setup.exe"
+            "$(Get-FileHash OwlSetup.exe -Algorithm SHA256 | Select-Object -ExpandProperty Hash)  OwlSetup.exe"
+            "$(Get-FileHash PC-Setup.exe -Algorithm SHA256 | Select-Object -ExpandProperty Hash)  PC-Setup.exe"
+          ) | Set-Content SHA256.txt -Encoding ascii
       - name: Créer la Release GitHub
         shell: powershell
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${{ github.ref_name }}" OwlSetup.exe PC-Setup.exe SHA256.txt --title "OwlSetup ${{ github.ref_name }}" --generate-notes
+        run: gh release create "$env:RELEASE_TAG" OwlSetup-Setup.exe OwlSetup.exe PC-Setup.exe SHA256.txt --target "${{ github.sha }}" --title "OwlSetup $env:RELEASE_TAG" --generate-notes
