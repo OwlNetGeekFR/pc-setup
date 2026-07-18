@@ -48,6 +48,7 @@ Write-Host "Chaque deplacement demandera votre confirmation et restera reversibl
 foreach ($root in $roots) {
     Get-ChildItem -LiteralPath $root -Directory -Force -ErrorAction SilentlyContinue |
         Where-Object LastWriteTime -lt (Get-Date).AddDays(-90) |
+        Where-Object { ($_.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0 } |
         ForEach-Object {
             $folder = $_
             $name = Normalize-AppName $folder.Name

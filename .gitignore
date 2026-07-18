@@ -8,6 +8,7 @@ PC-Setup-v*.exe
 PC-Setup-build-*.exe
 PC-Setup-Natif.exe
 PC-Setup.exe
+artifacts/
 
 # Prototypes historiques non utilisés par la version WebView2
 PCSetupDesktop.cs
@@ -33,3 +34,5 @@ assets/branding/pc-setup-logo.png
 
 # Site de démonstration conservé uniquement en local
 site/
+PC-Setup-Site/
+PC-Setup-Site.zip

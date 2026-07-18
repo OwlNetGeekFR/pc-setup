@@ -1,0 +1,58 @@
+# Validation d'une version bêta
+
+Cette liste doit être vérifiée avant de créer un tag et une Release GitHub.
+
+## Interface
+
+- Le badge `BÊTA` et le numéro de version sont visibles.
+- La navigation et toutes les fenêtres s'affichent correctement.
+- Le bouton de mise à jour indique que la publication est désactivée.
+
+## Installation et désinstallation
+
+- Installer au moins une application légère.
+- Vérifier que l'application est ensuite marquée comme installée.
+- Désinstaller cette application depuis PC Setup.
+- Utiliser le bouton Réparer sur une application compatible.
+- Vérifier qu'une application non compatible affiche un avertissement compréhensible.
+- Tester un échec d'installation et vérifier que le message reste compréhensible.
+
+## Sauvegarde et restauration
+
+- Sauvegarder la configuration dans un fichier `.pcsetup.json`.
+- Vérifier que le fichier contient la liste des logiciels et les choix de nettoyage.
+- Restaurer ce fichier et vérifier que les logiciels disponibles reviennent dans la sélection.
+- Créer, enregistrer puis charger un profil personnalisé.
+- Ajouter un identifiant WinGet personnalisé.
+
+## Outils système
+
+- Lancer le diagnostic WinGet.
+- Tester la réparation WinGet uniquement si le diagnostic signale un problème.
+- Créer un point de restauration et vérifier le résultat.
+- Afficher l'historique puis ouvrir un journal.
+- Analyser les applications au démarrage et ouvrir la page Windows correspondante.
+- Lancer l'analyse du disque et vérifier qu'aucun fichier n'est supprimé.
+- Sélectionner plusieurs applications installées et vérifier la confirmation de désinstallation groupée sans forcément la valider.
+
+## Mises à jour
+
+- Rechercher les mises à jour disponibles.
+- Installer une seule mise à jour sélectionnée.
+- Vérifier le rapport dans `%LOCALAPPDATA%\PCSetup\Logs`.
+
+## Nettoyage et quarantaine
+
+- Lancer une analyse avec les options recommandées.
+- Vérifier l'estimation de l'espace et les chemins affichés avant le nettoyage.
+- Vérifier que le bouton de suppression reste désactivé tant que l'analyse n'est pas terminée.
+- Vérifier que Documents, Téléchargements, Images, Vidéos et Bureau ne sont pas touchés.
+- Restaurer un élément de quarantaine.
+- Ne supprimer définitivement la quarantaine qu'après contrôle.
+
+## Publication
+
+- Aucun fichier de test ne doit se trouver dans le dépôt Git.
+- La version finale ne doit plus afficher le badge `BÊTA`.
+- Le SHA-256 de l'exécutable final doit être publié.
+- Lorsque SignPath sera disponible, la signature doit être vérifiée avant la Release.

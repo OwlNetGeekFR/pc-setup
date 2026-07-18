@@ -32,6 +32,53 @@ const apps = [
   { id:"RARLab.WinRAR", name:"WinRAR", category:"Utilitaires", desc:"Gestion d'archives compressées", icon:"WR", color:"#8a5db1", site:"https://www.win-rar.com/download.html" }
 ];
 
+apps.push(
+  {id:"qBittorrent.qBittorrent",name:"qBittorrent",category:"Internet",desc:"Client BitTorrent libre et sans publicité",icon:"qB",color:"#2f72b8",site:"https://www.qbittorrent.org/download",repairMode:"reinstall"},
+  {id:"Rufus.Rufus",name:"Rufus",category:"Utilitaires",desc:"Création de clés USB démarrables · application portable",icon:"RF",color:"#e2c152",site:"https://rufus.ie/",repairMode:"reinstall",portable:true,launchable:true},
+  {id:"CrystalDewWorld.CrystalDiskInfo",name:"CrystalDiskInfo",category:"Utilitaires",desc:"Santé et température des disques",icon:"DI",color:"#447ed0",site:"https://crystalmark.info/en/software/crystaldiskinfo/",repairMode:"reinstall"},
+  {id:"CrystalDewWorld.CrystalDiskMark",name:"CrystalDiskMark",category:"Utilitaires",desc:"Mesure des performances des disques",icon:"DM",color:"#567bd4",site:"https://crystalmark.info/en/software/crystaldiskmark/",repairMode:"reinstall"},
+  {id:"ShareX.ShareX",name:"ShareX",category:"Utilitaires",desc:"Captures d'écran et outils de partage",icon:"SX",color:"#2f9ca8",site:"https://getsharex.com/",repairMode:"reinstall"},
+  {id:"M2Team.NanaZip",name:"NanaZip",category:"Utilitaires",desc:"Gestion moderne des archives Windows",icon:"NZ",color:"#526fc4",site:"https://github.com/M2Team/NanaZip",repairMode:"reinstall"},
+  {id:"JAMSoftware.TreeSize.Free",name:"TreeSize Free",category:"Utilitaires",desc:"Analyse visuelle de l'espace disque",icon:"TS",color:"#50a05a",site:"https://www.jam-software.com/treesize_free",repairMode:"reinstall"},
+  {id:"Klocman.BulkCrapUninstaller",name:"Bulk Crap Uninstaller",category:"Utilitaires",desc:"Désinstallation avancée et groupée",icon:"BC",color:"#8b68c9",site:"https://www.bcuninstaller.com/",repairMode:"reinstall"},
+  {id:"KeePassXCTeam.KeePassXC",name:"KeePassXC",category:"Sécurité",desc:"Gestionnaire de mots de passe local",icon:"KX",color:"#6a9e3d",site:"https://keepassxc.org/download/",repairMode:"reinstall"},
+  {id:"GIMP.GIMP.3",name:"GIMP",category:"Création",desc:"Retouche et création d'images",icon:"GI",color:"#786753",site:"https://www.gimp.org/downloads/",repairMode:"reinstall"},
+  {id:"KDE.Krita",name:"Krita",category:"Création",desc:"Dessin et peinture numérique",icon:"KR",color:"#8d56c7",site:"https://krita.org/en/download/",repairMode:"reinstall"},
+  {id:"Audacity.Audacity",name:"Audacity",category:"Multimédia",desc:"Enregistrement et montage audio",icon:"AU",color:"#3158c7",site:"https://www.audacityteam.org/download/windows/",repairMode:"reinstall"},
+  {id:"HandBrake.HandBrake",name:"HandBrake",category:"Multimédia",desc:"Conversion et compression vidéo",icon:"HB",color:"#67a33f",site:"https://handbrake.fr/downloads.php",repairMode:"reinstall"},
+  {id:"KDE.Kdenlive",name:"Kdenlive",category:"Création",desc:"Montage vidéo libre et complet",icon:"KD",color:"#4e83b8",site:"https://kdenlive.org/download/",repairMode:"reinstall"},
+  {id:"BlenderFoundation.Blender",name:"Blender",category:"Création",desc:"Création 3D, animation et rendu",icon:"BL",color:"#e57932",site:"https://www.blender.org/download/",repairMode:"reinstall"},
+  {id:"calibre.calibre",name:"Calibre",category:"Bureautique",desc:"Bibliothèque et conversion de livres numériques",icon:"CA",color:"#66a950",site:"https://calibre-ebook.com/download_windows",repairMode:"reinstall"},
+  {id:"Mozilla.Thunderbird",name:"Mozilla Thunderbird",category:"Communication",desc:"Messagerie électronique libre",icon:"TB",color:"#4b73d0",site:"https://www.thunderbird.net/",repairMode:"reinstall"},
+  {id:"Nextcloud.NextcloudDesktop",name:"Nextcloud",category:"Communication",desc:"Synchronisation avec un cloud personnel",icon:"NC",color:"#0082c9",site:"https://nextcloud.com/install/#install-clients",repairMode:"reinstall"},
+  {id:"Tailscale.Tailscale",name:"Tailscale",category:"Sécurité",desc:"Réseau privé simple basé sur WireGuard",icon:"TL",color:"#626b78",site:"https://tailscale.com/download/windows",repairMode:"reinstall"},
+  {id:"WireGuard.WireGuard",name:"WireGuard",category:"Sécurité",desc:"Client VPN moderne et léger",icon:"WG",color:"#a43b42",site:"https://www.wireguard.com/install/",repairMode:"reinstall"},
+  {id:"RustDesk.RustDesk",name:"RustDesk",category:"Communication",desc:"Contrôle à distance libre",icon:"RD",color:"#e34a50",site:"https://rustdesk.com/",repairMode:"reinstall"},
+  {id:"TeamViewer.TeamViewer",name:"TeamViewer",category:"Communication",desc:"Assistance et contrôle à distance",icon:"TV",color:"#1677d2",site:"https://www.teamviewer.com/download/windows/",repairMode:"reinstall"},
+  {id:"GitHub.GitHubDesktop",name:"GitHub Desktop",category:"Développement",desc:"Client graphique officiel pour GitHub",icon:"GH",color:"#6d5ac5",site:"https://desktop.github.com/download/",tags:["dev"],repairMode:"reinstall"},
+  {id:"dbeaver.dbeaver",name:"DBeaver Community",category:"Développement",desc:"Gestion universelle de bases de données",icon:"DB",color:"#70533e",site:"https://dbeaver.io/download/",tags:["dev"],repairMode:"reinstall"},
+  {id:"JetBrains.Toolbox",name:"JetBrains Toolbox",category:"Développement",desc:"Gestionnaire des outils JetBrains",icon:"JB",color:"#e34d80",site:"https://www.jetbrains.com/toolbox-app/",tags:["dev"],repairMode:"reinstall"},
+  {id:"WinSCP.WinSCP",name:"WinSCP",category:"Développement",desc:"Transfert sécurisé de fichiers SFTP",icon:"WS",color:"#61a841",site:"https://winscp.net/eng/download.php",tags:["dev"],repairMode:"reinstall"},
+  {id:"PuTTY.PuTTY",name:"PuTTY",category:"Développement",desc:"Client SSH et terminal distant",icon:"PT",color:"#4d8bc3",site:"https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html",tags:["dev"],repairMode:"reinstall"},
+  {id:"FileZilla.Client",name:"FileZilla Client",category:"Internet",desc:"Transfert de fichiers FTP et SFTP",icon:"FZ",color:"#b93434",site:"https://filezilla-project.org/download.php",repairMode:"reinstall"},
+  {id:"EclipseAdoptium.Temurin.21.JDK",name:"Java Temurin 21 JDK",category:"Composants",desc:"Environnement Java libre et maintenu",icon:"JV",color:"#e07235",site:"https://adoptium.net/temurin/releases/",tags:["dev"],repairMode:"reinstall"},
+  {id:"GoLang.Go",name:"Go",category:"Développement",desc:"Langage Go et ses outils",icon:"GO",color:"#18a8c5",site:"https://go.dev/dl/",tags:["dev"],repairMode:"reinstall"},
+  {id:"Rustlang.Rustup",name:"Rustup",category:"Développement",desc:"Installation et gestion du langage Rust",icon:"RS",color:"#b35f38",site:"https://rustup.rs/",tags:["dev"],repairMode:"reinstall"},
+  {id:"ElectronicArts.EADesktop",name:"EA app",category:"Gaming",desc:"Bibliothèque et jeux Electronic Arts",icon:"EA",color:"#db3939",site:"https://www.ea.com/ea-app",tags:["gaming"],repairMode:"reinstall"},
+  {id:"Blizzard.BattleNet",name:"Battle.net",category:"Gaming",desc:"Lanceur des jeux Blizzard",icon:"BN",color:"#228bd2",site:"https://download.battle.net/",tags:["gaming"],repairMode:"reinstall"},
+  {id:"Playnite.Playnite",name:"Playnite",category:"Gaming",desc:"Bibliothèque unifiée de jeux vidéo",icon:"PN",color:"#36a0d5",site:"https://playnite.link/download.html",tags:["gaming"],repairMode:"reinstall"},
+  {id:"HeroicGamesLauncher.HeroicGamesLauncher",name:"Heroic Games Launcher",category:"Gaming",desc:"Lanceur libre pour Epic et GOG",icon:"HG",color:"#7757d8",site:"https://heroicgameslauncher.com/",tags:["gaming"],repairMode:"reinstall"},
+  {id:"Amazon.Games",name:"Amazon Games",category:"Gaming",desc:"Lanceur de jeux Amazon",icon:"AG",color:"#4b83c3",site:"https://www.amazongames.com/en-us/support/prime-gaming/articles/download-and-install-the-amazon-games-app",tags:["gaming"],repairMode:"reinstall"},
+  {id:"Overwolf.CurseForge",name:"CurseForge",category:"Gaming",desc:"Gestion des mods de jeux",icon:"CF",color:"#ef6c35",site:"https://www.curseforge.com/download/app",tags:["gaming"],repairMode:"reinstall"},
+  {id:"Oracle.VirtualBox",name:"Oracle VirtualBox",category:"Virtualisation",desc:"Machines virtuelles multiplateformes",icon:"VB",color:"#3276a8",site:"https://www.virtualbox.org/wiki/Downloads",repairMode:"reinstall"},
+  {id:"VMware.WorkstationPro",name:"VMware Workstation Pro",category:"Virtualisation",desc:"Machines virtuelles professionnelles",icon:"VM",color:"#e38b35",site:"https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion",repairMode:"reinstall"},
+  {id:"Microsoft.WSL",name:"Windows Subsystem for Linux",category:"Virtualisation",desc:"Environnement Linux intégré à Windows",icon:"WSL",color:"#5c7894",site:"https://learn.microsoft.com/windows/wsl/install",repairMode:"reinstall"}
+);
+
+if (Array.isArray(window.PC_SETUP_CATALOG) && window.PC_SETUP_CATALOG.length) {
+  apps.splice(0, apps.length, ...window.PC_SETUP_CATALOG);
+}
+
 const appLogos = {
   "Google.Chrome":"googlechrome.svg", "Mozilla.Firefox":"firefox.svg", "Brave.Brave":"brave.svg",
   "7zip.7zip":"sevenzip.svg", "VideoLAN.VLC":"vlc.svg", "Notepad++.Notepad++":"notepadpp.svg",
@@ -44,14 +91,34 @@ const appLogos = {
   "Microsoft.VCRedist.2015+.x64":"cplusplus.svg", "Docker.DockerDesktop":"docker.svg",
   "Postman.Postman":"postman.svg", "Microsoft.WindowsTerminal":"terminal.svg", "Spotify.Spotify":"spotify.svg",
   "Zoom.Zoom":"zoom.svg", "Bitwarden.Bitwarden":"bitwarden.svg", "Malwarebytes.Malwarebytes":"malwarebytes.svg",
-  "AnyDesk.AnyDesk":"anydesk.svg", "RARLab.WinRAR":"winrar.ico"
+  "AnyDesk.AnyDesk":"anydesk.svg", "RARLab.WinRAR":"winrar.ico",
+  "qBittorrent.qBittorrent":"qbittorrent.svg", "Rufus.Rufus":"rufus.png",
+  "CrystalDewWorld.CrystalDiskInfo":"crystaldiskinfo.png", "CrystalDewWorld.CrystalDiskMark":"crystaldiskmark.png",
+  "ShareX.ShareX":"sharex.svg", "M2Team.NanaZip":"nanazip.png", "JAMSoftware.TreeSize.Free":"treesize.png",
+  "Klocman.BulkCrapUninstaller":"bcu.ico", "KeePassXCTeam.KeePassXC":"keepassxc.svg",
+  "GIMP.GIMP.3":"gimp.svg", "KDE.Krita":"krita.svg", "Audacity.Audacity":"audacity.svg",
+  "HandBrake.HandBrake":"handbrake.png", "KDE.Kdenlive":"kdenlive.svg",
+  "BlenderFoundation.Blender":"blender.svg", "calibre.calibre":"calibre.png",
+  "Mozilla.Thunderbird":"thunderbird.svg", "Nextcloud.NextcloudDesktop":"nextcloud.svg",
+  "Tailscale.Tailscale":"tailscale.svg", "WireGuard.WireGuard":"wireguard.svg",
+  "RustDesk.RustDesk":"rustdesk.svg", "TeamViewer.TeamViewer":"teamviewer.svg",
+  "GitHub.GitHubDesktop":"githubdesktop.svg", "dbeaver.dbeaver":"dbeaver.svg",
+  "JetBrains.Toolbox":"jetbrains.svg", "WinSCP.WinSCP":"winscp.png", "PuTTY.PuTTY":"putty.svg",
+  "FileZilla.Client":"filezilla.svg", "EclipseAdoptium.Temurin.21.JDK":"temurin.svg",
+  "GoLang.Go":"golang.svg", "Rustlang.Rustup":"rustup.svg", "ElectronicArts.EADesktop":"ea.svg",
+  "Blizzard.BattleNet":"battlenet.svg", "Playnite.Playnite":"playnite.svg",
+  "HeroicGamesLauncher.HeroicGamesLauncher":"heroic.svg", "Amazon.Games":"amazongames.png",
+  "Overwolf.CurseForge":"curseforge.svg", "Oracle.VirtualBox":"virtualbox.svg",
+  "VMware.WorkstationPro":"vmware.svg", "Microsoft.WSL":"wsl.svg"
 };
-apps.forEach(app => app.logo = `assets/logos/${appLogos[app.id]}`);
+apps.forEach(app => app.logo = app.logo || (appLogos[app.id] ? `assets/logos/${appLogos[app.id]}` : ""));
 
 const categories = ["Tout", ...new Set(apps.map(app => app.category))];
 let selected = new Set(JSON.parse(localStorage.getItem("pcsetup-selection") || "[]"));
 let installedApps = new Set();
+let managedInstalled = new Set();
 let pendingUninstallId = null;
+let pendingRepairId = null;
 let pendingCleanupChoices = [];
 let availableUpdates = [];
 let selectedUpdates = new Set();
@@ -60,7 +127,7 @@ let activeCategory = "Tout";
 let searchTerm = "";
 
 const $ = selector => document.querySelector(selector);
-const icon = app => `<span class="app-icon" style="--app:${app.color}"><img src="${app.logo}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="app-icon-fallback" hidden>${app.icon}</span></span>`;
+const icon = app => `<span class="app-icon" style="--app:${app.color}">${app.logo ? `<img src="${app.logo}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="app-icon-fallback" hidden>${app.icon}</span>` : `<span class="app-icon-fallback">${app.icon}</span>`}</span>`;
 const save = () => localStorage.setItem("pcsetup-selection", JSON.stringify([...selected]));
 
 function notify(title, detail) {
@@ -82,9 +149,12 @@ function renderApps() {
   $("#appGrid").innerHTML = visible.map(app => `
     <article class="app-card ${selected.has(app.id) ? "selected" : ""} ${installedApps.has(app.id) ? "installed" : ""}" data-app="${app.id}" tabindex="0" aria-label="${app.name}">
       ${icon(app)}<span class="app-copy"><strong>${app.name}</strong><small>${app.desc}</small><span class="app-footer"><em>${app.category}</em><a class="official-link" href="${app.site}" target="_blank" rel="noopener" title="Ouvrir le site officiel de ${app.name}" onclick="event.stopPropagation()">Site officiel ↗</a></span></span>
-      ${installedApps.has(app.id) ? `<button class="uninstall-icon" data-uninstall="${app.id}" title="Désinstaller ${app.name}">×</button><span class="installed-badge">✓ Installé</span>` : `<span class="add-icon">${selected.has(app.id) ? "✓" : "+"}</span>`}
+      ${installedApps.has(app.id) ? `<span class="installed-actions"><button class="manage-icon ${managedInstalled.has(app.id) ? "active" : ""}" data-manage-installed="${app.id}" title="Sélectionner pour une désinstallation groupée">${managedInstalled.has(app.id) ? "✓" : "□"}</button><button class="repair-icon" data-repair="${app.id}" title="Réparer ${app.name}">⚙</button><button class="uninstall-icon" data-uninstall="${app.id}" title="Désinstaller ${app.name}">×</button></span><span class="repair-capability">${app.repairMode === "native" ? "Réparation native" : "Réinstallation réparatrice"}</span><span class="installed-badge">✓ Installé</span>` : `<span class="add-icon">${selected.has(app.id) ? "✓" : "+"}</span>`}
     </article>`).join("");
   $("#emptyState").classList.toggle("hidden", visible.length !== 0);
+  $("#installedManager").classList.toggle("hidden", installedApps.size === 0);
+  $("#managedCount").textContent = `${managedInstalled.size} logiciel${managedInstalled.size > 1 ? "s" : ""} sélectionné${managedInstalled.size > 1 ? "s" : ""}`;
+  $("#batchUninstallBtn").disabled = managedInstalled.size === 0;
 }
 
 function renderSelection() {
@@ -113,12 +183,64 @@ function toggleApp(id) {
 function showView(id) {
   document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === id));
   document.querySelectorAll(".nav-item").forEach(item => item.classList.toggle("active", item.dataset.view === id));
-  $("#currentView").textContent = {home:"Accueil", catalog:"Installer des logiciels", updates:"Tout mettre à jour", cleanup:"Libérer de l'espace", quarantine:"Quarantaine", queue:"Ma sélection", history:"Guide d'installation"}[id];
+  $("#currentView").textContent = {home:"Accueil", catalog:"Installer des logiciels", updates:"Tout mettre à jour", cleanup:"Libérer de l'espace", quarantine:"Quarantaine", tools:"Outils système", security:"Centre de sécurité", queue:"Ma sélection", history:"Guide d'installation"}[id];
   document.body.classList.remove("menu-open");
   if (id === "updates" && !updatesLoaded) requestUpdateScan();
   if (id === "quarantine") requestQuarantine();
+  if (id === "tools") { requestHistory(); diagnoseWinget(); }
+  if (id === "security") requestSecurityStatus();
   renderSelection();
   window.scrollTo({top: 0, behavior:"smooth"});
+}
+
+function addCustomPackage() {
+  const id = $("#customPackageId").value.trim();
+  if (!/^[A-Za-z0-9.+_-]+$/.test(id)) {
+    notify("Identifiant invalide", "Utilisez uniquement l'identifiant exact affiché par WinGet.");
+    return;
+  }
+  if (!apps.some(app => app.id.toLocaleLowerCase() === id.toLocaleLowerCase())) {
+    apps.push({id,name:id,category:"Personnalisé",desc:"Paquet ajouté manuellement par identifiant WinGet",icon:"+",color:"#4677c9",site:"https://learn.microsoft.com/windows/package-manager/winget/search",repairMode:"reinstall"});
+    categories.push("Personnalisé");
+    renderFilters();
+  }
+  selected.add(id); $("#customPackageId").value=""; renderApps(); renderSelection();
+  notify("Paquet ajouté", id);
+}
+
+function refreshProfiles() {
+  const profiles = JSON.parse(localStorage.getItem("pcsetup-profiles") || "{}");
+  $("#savedProfiles").innerHTML = `<option value="">Profils enregistrés</option>${Object.keys(profiles).sort().map(name => `<option value="${encodeURIComponent(name)}">${name}</option>`).join("")}`;
+}
+
+function saveProfile() {
+  const name=$("#profileName").value.trim();
+  if (!name || !selected.size) { notify("Profil incomplet","Donnez un nom et sélectionnez au moins un logiciel."); return; }
+  const profiles=JSON.parse(localStorage.getItem("pcsetup-profiles") || "{}");
+  profiles[name]=[...selected];
+  localStorage.setItem("pcsetup-profiles",JSON.stringify(profiles));
+  $("#profileName").value="";refreshProfiles();notify("Profil enregistré",name);
+}
+
+function loadProfile() {
+  const value=$("#savedProfiles").value;if(!value)return;
+  const name=decodeURIComponent(value),profiles=JSON.parse(localStorage.getItem("pcsetup-profiles") || "{}");
+  selected=new Set((profiles[name]||[]).filter(id=>!installedApps.has(id)));
+  renderApps();renderSelection();notify("Profil chargé",name);
+}
+
+function requestHistory(){if(window.chrome?.webview)window.chrome.webview.postMessage({action:"load-history",payload:{}});}
+function requestSecurityStatus(){if(window.chrome?.webview)window.chrome.webview.postMessage({action:"security-status",payload:{}});}
+function diagnoseWinget(){if(window.chrome?.webview){$("#wingetDiagnosticText").textContent="Diagnostic en cours...";window.chrome.webview.postMessage({action:"diagnose-winget",payload:{}});}}
+
+const toolProgressIds={winget:"wingetToolProgress",restore:"restoreToolProgress",startup:"startupToolProgress",disk:"diskToolProgress"};
+function setToolProgress(tool,percent,status=""){
+  const progress=document.getElementById(toolProgressIds[tool]);if(!progress)return;
+  const value=Math.max(0,Math.min(100,Number(percent)||0));
+  progress.classList.remove("hidden");
+  progress.querySelector("i").style.width=`${value}%`;
+  progress.querySelector("b").textContent=`${Math.round(value)}%`;
+  if(status)progress.title=status;
 }
 
 function requestUpdateScan() {
@@ -425,6 +547,13 @@ async function executeWithButton(button, action, payload) {
 function openInstallModal() {
   if (!selected.size) return;
   $("#modalAppCount").textContent = `${selected.size} logiciel${selected.size > 1 ? "s" : ""}`;
+  const portableCount=apps.filter(app=>selected.has(app.id)&&app.portable).length;
+  const launchable=selected.size===1&&apps.some(app=>selected.has(app.id)&&app.launchable);
+  $("#launchAfterOption").classList.toggle("hidden",!launchable);
+  $("#launchAfterInstall").checked=false;
+  $("#portableInstallNotice").textContent=portableCount
+    ? `${portableCount} application(s) portable(s) détectée(s). Le raccourci sera placé selon votre choix, sans déplacer les fichiers gérés par WinGet.`
+    : "Les fichiers restent dans le dossier sécurisé choisi par WinGet ou l’éditeur. Certains installateurs peuvent conserver leur propre raccourci.";
   $("#installConfirmView").classList.remove("hidden");
   $("#installProgressView").classList.add("hidden");
   $("#finishInstall").classList.add("hidden");
@@ -450,7 +579,8 @@ function beginInstall() {
   $("#currentPackage").textContent = "Initialisation...";
   $("#packageResult").textContent = "EN ATTENTE";
   $("#progressSummary").textContent = "Ne fermez pas PC Setup pendant l'installation.";
-  executeWithButton($("#confirmInstall"), "install", {packages:[...selected]});
+  const selectedApps=apps.filter(app=>selected.has(app.id)).map(app=>({id:app.id,name:app.name,portable:!!app.portable}));
+  executeWithButton($("#confirmInstall"), "install", {packages:[...selected],apps:selectedApps,shortcut:$("#installShortcutLocation").value,launchAfter:$("#launchAfterInstall").checked});
 }
 
 function openUpdateModal() {
@@ -500,8 +630,11 @@ function openCleanupModal() {
   if (!pendingCleanupChoices.length) return;
   const count = pendingCleanupChoices.length;
   $("#cleanupModalCount").textContent = `${count} zone${count > 1 ? "s" : ""}`;
-  const advanced = pendingCleanupChoices.includes("components") || pendingCleanupChoices.includes("app-leftovers");
-  $("#cleanupModalDetail").textContent = advanced ? "Nettoyage standard et options avancées sélectionnées" : "Fichiers temporaires et caches sélectionnés";
+  $("#cleanupAnalysisTitle").textContent = "Analyse en cours...";
+  $("#cleanupModalDetail").textContent = "Calcul de l'espace récupérable sans suppression";
+  $("#cleanupAnalysisList").innerHTML = `<div class="analysis-loading"><span>↻</span> Analyse des dossiers sélectionnés...</div>`;
+  $("#protectedFolders").classList.add("hidden");
+  $("#confirmCleanup").disabled = true;
   $("#cleanupConfirmView").classList.remove("hidden");
   $("#cleanupProgressView").classList.add("hidden");
   $("#cleanupResultCard").classList.add("hidden");
@@ -510,6 +643,47 @@ function openCleanupModal() {
   $("#closeCleanupModal").disabled = false;
   $("#cleanupModal").dataset.running = "false";
   $("#cleanupModal").classList.remove("hidden");
+  if (window.chrome?.webview) window.chrome.webview.postMessage({action:"analyze-cleanup", payload:{choices:pendingCleanupChoices}});
+}
+
+function openRepairModal(id) {
+  const app = apps.find(item => item.id === id);
+  if (!app) return;
+  pendingRepairId = id;
+  $("#repairAppName").textContent = app.name;
+  $("#repairConfirmView").classList.remove("hidden");
+  $("#repairProgressView").classList.add("hidden");
+  $("#finishRepair").classList.add("hidden");
+  $("#closeRepairModal").disabled = false;
+  $("#repairModal").dataset.running = "false";
+  $("#repairModal").classList.remove("hidden");
+}
+
+function closeRepairModal() {
+  if ($("#repairModal").dataset.running === "true") return;
+  $("#repairModal").classList.add("hidden");
+  pendingRepairId = null;
+}
+
+function beginRepair() {
+  if (!pendingRepairId || !window.chrome?.webview) return;
+  $("#repairConfirmView").classList.add("hidden");
+  $("#repairProgressView").classList.remove("hidden");
+  $("#closeRepairModal").disabled = true;
+  $("#repairModal").dataset.running = "true";
+  $("#repairProgressBar").style.width = "35%";
+  window.chrome.webview.postMessage({action:"repair", payload:{id:pendingRepairId}});
+}
+
+function exportConfiguration() {
+  if (!window.chrome?.webview) return;
+  const cleanup = [...document.querySelectorAll("[data-cleanup]:checked")].map(input => input.dataset.cleanup);
+  window.chrome.webview.postMessage({action:"export-config", payload:{selected:[...selected], cleanup}});
+}
+
+function importConfiguration() {
+  if (!window.chrome?.webview) return;
+  window.chrome.webview.postMessage({action:"import-config", payload:{}});
 }
 
 function closeCleanupModal() {
@@ -539,12 +713,18 @@ function openUninstallModal(id) {
   if (!app) return;
   pendingUninstallId = id;
   $("#uninstallAppName").textContent = app.name;
+  $("#uninstallSimulationStatus").textContent = "Vérification du paquet et de ses accès...";
+  $("#uninstallPreviewPackage").textContent = id;
+  $("#uninstallPreviewScope").textContent = "Analyse en cours";
+  $("#uninstallPreviewShortcuts").textContent = "Analyse en cours";
+  $("#confirmUninstall").disabled = true;
   $("#uninstallConfirmView").classList.remove("hidden");
   $("#uninstallProgressView").classList.add("hidden");
   $("#finishUninstall").classList.add("hidden");
   $("#closeUninstallModal").disabled = false;
   $("#uninstallModal").dataset.running = "false";
   $("#uninstallModal").classList.remove("hidden");
+  if(window.chrome?.webview)window.chrome.webview.postMessage({action:"simulate-uninstall",payload:{id}});
 }
 
 function closeUninstallModal() {
@@ -627,6 +807,19 @@ function renderAppUpdateState(message) {
     $("#appLatestVersion").textContent = message.latest || message.current;
     $("#appUpdateStateTitle").textContent = "PC Setup est à jour";
     $("#appUpdateStateDetail").textContent = "Vous utilisez déjà la dernière version disponible.";
+  } else if (message.status === "beta") {
+    $("#appUpdateModal").dataset.running = "false";
+    $("#closeAppUpdate").disabled = false;
+    $("#cancelAppUpdate").disabled = false;
+    install.disabled = true;
+    notification.classList.remove("available");
+    notification.title = "Version bêta locale";
+    notification.setAttribute("aria-label", "Version bêta locale");
+    icon.classList.remove("spinning");
+    icon.textContent = "β";
+    $("#appLatestVersion").textContent = "Publication désactivée";
+    $("#appUpdateStateTitle").textContent = "Version bêta locale";
+    $("#appUpdateStateDetail").textContent = "Cette construction sert aux tests et ne sera pas remplacée automatiquement.";
   } else if (message.status === "downloading") {
     icon.textContent = "↻";
     $("#appUpdateStateTitle").textContent = "Téléchargement sécurisé";
@@ -649,6 +842,163 @@ function renderAppUpdateState(message) {
 
 function handleInstallMessage(message) {
   if (!message) return;
+  if (message.type === "tool-progress") {
+    setToolProgress(message.tool,message.percent,message.status);
+    return;
+  }
+  if (message.type === "portable-access-ready") {
+    notify(`${message.name} est prêt`,"Un raccourci a été ajouté au menu Démarrer.");
+    return;
+  }
+  if (message.type === "security-status") {
+    const mark=(selector,ok,good,bad)=>{const element=$(selector);element.textContent=ok?good:bad;element.classList.toggle("security-good",!!ok);element.classList.toggle("security-warning",!ok);};
+    const protectedCore=message.integrity&&message.originLocked&&message.standardUser;
+    $("#securityHeadline").textContent=protectedCore?"Protections principales actives":"Une protection demande votre attention";
+    $("#securityVersion").textContent=`PC Setup ${message.version}`;
+    $("#securityElevation").textContent=message.standardUser?message.elevation:"Interface actuellement administrateur";
+    mark("#securityIntegrity",message.integrity,"Intégrité vérifiée","Interface modifiée");
+    mark("#securityOrigin",message.originLocked,"Origine verrouillée","Origine non verrouillée");
+    mark("#securitySignature",message.signed&&message.trusted,"Signature approuvée",message.signed?"Signature non approuvée":"Bêta locale non signée");
+    $("#securitySigner").textContent=message.signer;
+    mark("#securityWinget",message.winget!=="Indisponible",message.winget,"WinGet indisponible");
+    mark("#securityWebView",message.webview!=="Indisponible",message.webview,"WebView2 indisponible");
+    mark("#securityWorker",message.secureRuntime,"Dossier protégé actif","Créé au premier nettoyage");
+    $("#securityLogs").textContent=`${message.logs} rapport(s) conservé(s) dans ${message.logFolder}`;
+    return;
+  }
+  if (message.type === "uninstall-simulation") {
+    if(message.id!==pendingUninstallId)return;
+    $("#uninstallSimulationStatus").textContent=message.installed?"Aperçu terminé · valable 5 minutes":"Paquet non détecté par WinGet";
+    $("#uninstallPreviewPackage").textContent=message.version?`${message.id} · ${message.version}`:message.id;
+    $("#uninstallPreviewScope").textContent=message.scope;
+    $("#uninstallPreviewShortcuts").textContent=`${message.shortcuts} raccourci(s)`;
+    $("#confirmUninstall").disabled=!message.installed;
+    return;
+  }
+  if (message.type === "uninstall-simulation-error") {
+    if(message.id!==pendingUninstallId)return;
+    $("#uninstallSimulationStatus").textContent=`Simulation impossible : ${message.message}`;
+    $("#uninstallPreviewScope").textContent="À vérifier";
+    $("#uninstallPreviewShortcuts").textContent="—";
+    $("#confirmUninstall").disabled=true;
+    return;
+  }
+  if (message.type === "batch-uninstall-simulation") {
+    const names=(message.packages||[]).map(id=>apps.find(app=>app.id===id)?.name||id);
+    const preview=`MODE SIMULATION — aucun logiciel n'a encore été supprimé.\n\n${names.map(name=>`• ${name}`).join("\n")}\n\nConfirmer la désinstallation de ces ${names.length} logiciel(s) ?`;
+    if(confirm(preview))window.chrome?.webview?.postMessage({action:"batch-uninstall",payload:{packages:message.packages}});
+    return;
+  }
+  if (message.type === "winget-diagnostic") {
+    $("#wingetDiagnosticText").textContent = `${message.message}${message.version ? ` (${message.version})` : ""}`;
+    $("#wingetDiagnosticText").classList.toggle("tool-success", message.available && message.sources);
+    return;
+  }
+  if (message.type === "winget-repair-start") {
+    $("#wingetDiagnosticText").textContent = "Réenregistrement d'App Installer et actualisation des sources...";
+    return;
+  }
+  if (message.type === "winget-repair-complete") {
+    $("#wingetDiagnosticText").textContent = message.success ? "WinGet a été réparé et ses sources ont été actualisées." : `Réparation incomplète (code ${message.code}). Consultez ${message.logName}.`;
+    notify(message.success ? "WinGet réparé" : "Réparation à vérifier", $("#wingetDiagnosticText").textContent);
+    return;
+  }
+  if (message.type === "restore-point-start") {
+    $("#restorePointText").textContent = "Création du point de restauration...";
+    return;
+  }
+  if (message.type === "restore-point-complete") {
+    $("#restorePointText").textContent = message.success ? "Point de restauration créé avec succès." : `Création impossible (code ${message.code}). La protection du système peut être désactivée.`;
+    notify(message.success ? "Point créé" : "Point non créé", $("#restorePointText").textContent);
+    return;
+  }
+  if (message.type === "history-state") {
+    $("#operationHistory").innerHTML = (message.items || []).length ? message.items.map(item => `<article><span class="history-type">${item.type}</span><div><strong>${item.name}</strong><small>${item.date} · ${item.size}</small></div><button data-open-log="${encodeURIComponent(item.name)}">Ouvrir</button></article>`).join("") : `<p class="tool-empty">Aucun rapport enregistré.</p>`;
+    return;
+  }
+  if (message.type === "history-error") {
+    $("#operationHistory").innerHTML = `<p class="tool-empty">${message.message}</p>`; return;
+  }
+  if (message.type === "startup-state") {
+    $("#startupList").innerHTML = (message.items || []).length ? message.items.map(item => `<article><div><strong>${item.name}</strong><small>${item.source} · ${item.command}</small></div></article>`).join("") : `<p class="tool-empty">Aucun élément de démarrage détecté.</p>`;
+    return;
+  }
+  if (message.type === "disk-scan-start") {
+    setToolProgress("disk",5,"Préparation de l'analyse...");
+    $("#diskList").innerHTML = `<p class="tool-empty">Analyse en cours, cela peut prendre quelques instants...</p>`; return;
+  }
+  if (message.type === "disk-scan-state") {
+    const max=Math.max(...(message.items || []).map(item=>Number(item.bytes)),1);
+    $("#diskList").innerHTML = (message.items || []).map(item => `<article class="disk-item"><div><strong>${item.name}</strong><small>${item.path} · ${item.files} fichiers</small><i style="width:${Math.max(2,Number(item.bytes)/max*100)}%"></i></div><b>${item.size}</b></article>`).join("");
+    return;
+  }
+  if (message.type === "disk-scan-error") {
+    $("#diskList").innerHTML = `<p class="tool-empty">${message.message}</p>`; return;
+  }
+  if (message.type === "batch-uninstall-start") {
+    notify("Désinstallation groupée", `${message.total} logiciel(s) dans la file.`); return;
+  }
+  if (message.type === "batch-uninstall-progress") {
+    notify("Désinstallation en cours", `${message.index}/${message.total} · ${message.id}`); return;
+  }
+  if (message.type === "batch-uninstall-item") {
+    if(message.success){installedApps.delete(message.id);managedInstalled.delete(message.id);renderApps();}
+    else notify("Désinstallation à vérifier", message.errorMessage || `WinGet a renvoyé le code ${message.code}.`);
+    return;
+  }
+  if (message.type === "batch-uninstall-complete") {
+    notify("Désinstallation terminée", `${message.success} réussi(s), ${message.failed} à vérifier. Rapport : ${message.logName}`); requestHistory(); return;
+  }
+  if (message.type === "app-info") {
+    if (message.beta) {
+      $("#buildBadge").classList.remove("hidden");
+      $("#buildBadge").textContent = "BÊTA";
+      $("#buildSubtitle").textContent = message.version;
+      document.title = `PC Setup BÊTA ${message.version}`;
+      document.body.classList.add("beta-build");
+    }
+    return;
+  }
+  if (message.type === "config-export-start") {
+    notify("Sauvegarde en cours", "Lecture des logiciels installés avec WinGet...");
+    return;
+  }
+  if (message.type === "config-export-complete") {
+    notify(message.success ? "Configuration sauvegardée" : "Sauvegarde impossible", message.success ? `${message.count} logiciel(s) enregistrés dans ${message.file}.` : message.message);
+    return;
+  }
+  if (message.type === "config-imported") {
+    const known = new Set(apps.map(app => app.id.toLocaleLowerCase()));
+    const restored = (message.packages || []).filter(id => known.has(String(id).toLocaleLowerCase()) && !installedApps.has(id));
+    selected = new Set(restored);
+    document.querySelectorAll("[data-cleanup]").forEach(input => { input.checked = (message.cleanup || []).includes(input.dataset.cleanup); });
+    updateCleanupCount(); renderApps(); renderSelection(); showView("queue");
+    notify("Configuration restaurée", `${restored.length} logiciel(s) disponible(s) ajouté(s) à la sélection depuis ${message.file}.`);
+    return;
+  }
+  if (message.type === "config-import-error") {
+    notify("Restauration impossible", message.message);
+    return;
+  }
+  if (message.type === "cleanup-analysis-start") {
+    $("#cleanupAnalysisTitle").textContent = "Analyse en cours...";
+    return;
+  }
+  if (message.type === "cleanup-analysis") {
+    $("#cleanupAnalysisTitle").textContent = `${message.size} récupérables estimés`;
+    $("#cleanupModalDetail").textContent = `${(message.items || []).reduce((sum, item) => sum + Number(item.files || 0), 0)} fichier(s) mesurés avant suppression`;
+    $("#cleanupAnalysisList").innerHTML = (message.items || []).map(item => `<article><div><strong>${item.label}</strong><small>${item.path}${item.note ? ` · ${item.note}` : ""}</small></div><b>${item.bytes ? item.size : "À calculer"}</b></article>`).join("");
+    $("#protectedFoldersList").textContent = (message.protectedFolders || []).join(" · ");
+    $("#protectedFolders").classList.remove("hidden");
+    $("#confirmCleanup").disabled = false;
+    return;
+  }
+  if (message.type === "cleanup-analysis-error") {
+    $("#cleanupAnalysisTitle").textContent = "Analyse incomplète";
+    $("#cleanupModalDetail").textContent = message.message;
+    $("#confirmCleanup").disabled = true;
+    return;
+  }
   if (message.type === "app-update-state") {
     renderAppUpdateState(message);
     return;
@@ -736,7 +1086,7 @@ function handleInstallMessage(message) {
     $("#updateProgressBar").style.width = "100%";
     $("#updateProgressPercent").textContent = "100%";
     $("#updateProgressTitle").textContent = message.success ? "Votre PC est à jour" : "Mise à jour terminée avec avertissement";
-    $("#updateProgressDetail").textContent = message.appsSuccess ? "Applications traitées avec succès" : `Certaines applications sont à vérifier (code ${message.code})`;
+    $("#updateProgressDetail").textContent = message.appsSuccess ? "Applications traitées avec succès" : (message.errorMessage || `Certaines applications sont à vérifier (code ${message.code})`);
     $("#updateSummary").textContent = `${message.windowsStarted ? "Recherche Windows Update lancée." : "Windows Update n'a pas pu être lancé."} Rapport : ${message.logName}`;
     document.querySelectorAll("[data-update-step]").forEach(step => { step.classList.remove("active"); step.classList.add("done"); });
     $("#finishUpdate").classList.remove("hidden");
@@ -747,6 +1097,9 @@ function handleInstallMessage(message) {
     installedApps = new Set(message.ids || []);
     installedApps.forEach(id => selected.delete(id));
     renderApps(); renderSelection();
+    if (message.warning && message.method === "registre") {
+      notify("Détection de secours active", `${message.count || 0} logiciel(s) reconnu(s) grâce au registre Windows.`);
+    }
     return;
   }
   if (message.type === "uninstall-start") {
@@ -754,12 +1107,35 @@ function handleInstallMessage(message) {
     $("#uninstallProgressDetail").textContent = `Suppression de ${message.id}`;
     return;
   }
+  if (message.type === "repair-start") {
+    $("#repairProgressBar").style.width = "55%";
+    $("#repairProgressDetail").textContent = `Réparation de ${message.id}`;
+    return;
+  }
+  if (message.type === "repair-fallback") {
+    $("#repairProgressBar").style.width = "72%";
+    $("#repairProgressTitle").textContent = "Réinstallation réparatrice";
+    $("#repairProgressDetail").textContent = "La réparation native n'est pas disponible. PC Setup réinstalle l'application sans la désinstaller.";
+    return;
+  }
+  if (message.type === "repair-complete") {
+    $("#repairModal").dataset.running = "false";
+    $("#closeRepairModal").disabled = false;
+    $("#repairProgressBar").style.width = "100%";
+    $("#repairProgressTitle").textContent = message.success ? "Logiciel réparé" : "Réparation impossible";
+    $("#repairProgressDetail").textContent = message.success
+      ? (message.mode === "reinstall" ? "L'application a été réinstallée par-dessus sa version actuelle afin de réparer ses fichiers." : "WinGet a terminé la réparation native.")
+      : (message.errorMessage || `La réparation native et la réinstallation ont échoué (code ${message.code}).`);
+    $("#repairSummary").textContent = `Rapport : ${message.logName}`;
+    $("#finishRepair").classList.remove("hidden");
+    return;
+  }
   if (message.type === "uninstall-complete") {
     $("#uninstallModal").dataset.running = "false";
     $("#closeUninstallModal").disabled = false;
     $("#uninstallProgressBar").style.width = "100%";
     $("#uninstallProgressTitle").textContent = message.success ? "Logiciel désinstallé" : "Désinstallation à vérifier";
-    $("#uninstallProgressDetail").textContent = message.success ? "L'application a été supprimée." : `Code de sortie : ${message.code}`;
+    $("#uninstallProgressDetail").textContent = message.success ? "L'application a été supprimée." : (message.errorMessage || `Code de sortie : ${message.code}`);
     $("#uninstallSummary").textContent = message.success ? "La carte a été actualisée automatiquement." : "Consultez le rapport rangé dans PC Setup.";
     $("#finishUninstall").classList.remove("hidden");
     if (message.success) { installedApps.delete(message.id); renderApps(); }
@@ -778,11 +1154,25 @@ function handleInstallMessage(message) {
     $("#currentPackage").textContent = message.id;
     $("#packageResult").textContent = "INSTALLATION";
   }
+  if (message.type === "install-security") {
+    const percent = Math.round(((message.index - 1 + .25) / message.total) * 100);
+    $("#progressPercent").textContent = `${percent}%`;
+    $("#progressBar").style.width = `${percent}%`;
+    $("#packageResult").textContent = message.success ? "SOURCE VÉRIFIÉE" : "SOURCE INTROUVABLE";
+  }
+  if (message.type === "install-execution") {
+    const percent = Math.round(((message.index - 1 + .45) / message.total) * 100);
+    $("#progressPercent").textContent = `${percent}%`;
+    $("#progressBar").style.width = `${percent}%`;
+    $("#progressDetail").textContent = `Installation de ${message.id} avec WinGet`;
+    $("#packageResult").textContent = "INSTALLATION EN COURS";
+  }
   if (message.type === "install-item") {
     const percent = Math.round((message.index / message.total) * 100);
     $("#progressPercent").textContent = `${percent}%`;
     $("#progressBar").style.width = `${percent}%`;
     $("#packageResult").textContent = message.success ? "TERMINÉ ✓" : "À VÉRIFIER";
+    if (!message.success && message.errorMessage) $("#progressDetail").textContent = message.errorMessage;
     if (message.success) { installedApps.add(message.id); selected.delete(message.id); renderApps(); renderSelection(); }
   }
   if (message.type === "install-complete") {
@@ -800,7 +1190,8 @@ function handleInstallMessage(message) {
 
 if (window.chrome && window.chrome.webview) {
   window.chrome.webview.addEventListener("message", event => handleInstallMessage(event.data));
-  window.chrome.webview.postMessage({action:"scan-installed", payload:{ids:apps.map(app => app.id)}});
+  window.chrome.webview.postMessage({action:"get-app-info", payload:{}});
+  window.chrome.webview.postMessage({action:"scan-installed", payload:{ids:apps.map(app => app.id), apps:apps.map(app => ({id:app.id,name:app.name,portable:!!app.portable}))}});
   window.chrome.webview.postMessage({action:"check-app-update", payload:{}});
   requestHealth();
   requestQuarantine();
@@ -809,13 +1200,23 @@ if (window.chrome && window.chrome.webview) {
 document.addEventListener("click", event => {
   const card = event.target.closest("[data-app]");
   const uninstall = event.target.closest("[data-uninstall]");
+  const repair = event.target.closest("[data-repair]");
+  const manageInstalled = event.target.closest("[data-manage-installed]");
   const nav = event.target.closest("[data-view]");
   const category = event.target.closest("[data-category]");
   const preset = event.target.closest("[data-preset]");
   const remove = event.target.closest("[data-remove]");
   const quarantineAction = event.target.closest("[data-quarantine-action]");
+  const openLog = event.target.closest("[data-open-log]");
   if (uninstall) openUninstallModal(uninstall.dataset.uninstall);
-  if (card && !uninstall) toggleApp(card.dataset.app);
+  if (repair) openRepairModal(repair.dataset.repair);
+  if (manageInstalled) {
+    const id=manageInstalled.dataset.manageInstalled;
+    if(managedInstalled.has(id))managedInstalled.delete(id);else managedInstalled.add(id);
+    renderApps();
+  }
+  if (openLog && window.chrome?.webview) window.chrome.webview.postMessage({action:"open-log",payload:{name:decodeURIComponent(openLog.dataset.openLog)}});
+  if (card && !uninstall && !repair && !manageInstalled) toggleApp(card.dataset.app);
   if (nav) showView(nav.dataset.view);
   if (event.target.closest("[data-focus-cleanup]")) {
     const target = event.target.closest("[data-focus-cleanup]").dataset.focusCleanup;
@@ -848,6 +1249,20 @@ $("#confirmUninstall").addEventListener("click", beginUninstall);
 $("#cancelUninstall").addEventListener("click", closeUninstallModal);
 $("#closeUninstallModal").addEventListener("click", closeUninstallModal);
 $("#finishUninstall").addEventListener("click", closeUninstallModal);
+$("#confirmRepair").addEventListener("click", beginRepair);
+$("#cancelRepair").addEventListener("click", closeRepairModal);
+$("#closeRepairModal").addEventListener("click", closeRepairModal);
+$("#finishRepair").addEventListener("click", closeRepairModal);
+$("#installCustomPackage").addEventListener("click", addCustomPackage);
+$("#customPackageId").addEventListener("keydown", event => {if(event.key==="Enter")addCustomPackage();});
+$("#saveProfile").addEventListener("click", saveProfile);
+$("#loadProfile").addEventListener("click", loadProfile);
+$("#batchUninstallBtn").addEventListener("click", () => {
+  if(!managedInstalled.size || !window.chrome?.webview)return;
+  window.chrome.webview.postMessage({action:"simulate-batch-uninstall",payload:{packages:[...managedInstalled]}});
+});
+$("#exportConfig").addEventListener("click", exportConfiguration);
+$("#importConfig").addEventListener("click", importConfiguration);
 $("#appUpdateBtn").addEventListener("click", openAppUpdateModal);
 $("#appUpdateNotification").addEventListener("click", openAppUpdateModal);
 $("#installAppUpdate").addEventListener("click", beginAppUpdate);
@@ -856,7 +1271,16 @@ $("#closeAppUpdate").addEventListener("click", closeAppUpdateModal);
 $("#updateAllBtn").addEventListener("click", openUpdateModal);
 $("#scanUpdatesBtn").addEventListener("click", requestUpdateScan);
 $("#refreshHealth").addEventListener("click", requestHealth);
+$("#refreshSecurity").addEventListener("click", requestSecurityStatus);
 $("#refreshQuarantine").addEventListener("click", requestQuarantine);
+$("#diagnoseWinget").addEventListener("click", diagnoseWinget);
+$("#repairWinget").addEventListener("click", () => window.chrome?.webview?.postMessage({action:"repair-winget",payload:{}}));
+$("#createRestorePoint").addEventListener("click", () => window.chrome?.webview?.postMessage({action:"create-restore-point",payload:{}}));
+$("#openSystemRestore").addEventListener("click", () => window.chrome?.webview?.postMessage({action:"open-system-restore",payload:{}}));
+$("#scanStartup").addEventListener("click", () => window.chrome?.webview?.postMessage({action:"scan-startup",payload:{}}));
+$("#openStartupSettings").addEventListener("click", () => window.chrome?.webview?.postMessage({action:"open-startup-settings",payload:{}}));
+$("#scanDisk").addEventListener("click", () => window.chrome?.webview?.postMessage({action:"scan-disk",payload:{}}));
+$("#refreshHistory").addEventListener("click", requestHistory);
 $("#confirmUpdate").addEventListener("click", beginUpdate);
 $("#cancelUpdate").addEventListener("click", closeUpdateModal);
 $("#closeUpdateModal").addEventListener("click", closeUpdateModal);
@@ -873,4 +1297,4 @@ $("#recommendedCleanup").addEventListener("click", () => {
 });
 $("#mobileMenu").addEventListener("click", () => document.body.classList.toggle("menu-open"));
 
-renderFilters(); renderApps(); renderSelection();
+refreshProfiles(); renderFilters(); renderApps(); renderSelection();

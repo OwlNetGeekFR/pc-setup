@@ -15,7 +15,7 @@
   <aside class="sidebar">
     <a class="brand" href="#" aria-label="PC Setup, accueil">
       <img class="brand-app-logo" src="assets/branding/pc-setup-logo.png" alt="" aria-hidden="true" />
-      <span><strong>PC Setup</strong><small>Windows installer</small></span>
+      <span><strong>PC Setup <b class="build-badge hidden" id="buildBadge">BÊTA</b></strong><small id="buildSubtitle">Windows installer</small></span>
     </a>
 
     <nav aria-label="Navigation">
@@ -24,6 +24,8 @@
       <button class="nav-item" data-view="updates"><span>↥</span> Tout mettre à jour <b class="new-badge">NEW</b></button>
       <button class="nav-item" data-view="cleanup"><span>◇</span> Libérer de l'espace</button>
       <button class="nav-item" data-view="quarantine"><span>♲</span> Quarantaine <b id="quarantineNavCount">0</b></button>
+      <button class="nav-item" data-view="tools"><span>⚙</span> Outils système <b class="new-badge">NEW</b></button>
+      <button class="nav-item" data-view="security"><span>♢</span> Centre de sécurité <b class="new-badge">NEW</b></button>
       <button class="nav-item" data-view="queue"><span>↓</span> Ma sélection <b id="navCount">0</b></button>
       <button class="nav-item" data-view="history"><span>↻</span> Guide d'installation</button>
     </nav>
@@ -118,6 +120,15 @@
       </section>
 
       <section class="catalog-section">
+        <div class="config-toolbar">
+          <div><span class="label">SAUVEGARDE DU PC</span><strong>Conservez votre liste de logiciels</strong><small>Exportez la configuration actuelle ou rechargez-la sur un autre ordinateur.</small></div>
+          <div><button class="secondary-dialog-button" id="importConfig">↥ Restaurer</button><button class="primary-dialog-button" id="exportConfig">↓ Sauvegarder</button></div>
+        </div>
+        <div class="custom-tools">
+          <div class="custom-install"><div><span class="label">PAQUET PERSONNALISÉ</span><strong>Installer un identifiant WinGet</strong></div><input id="customPackageId" placeholder="Exemple : Microsoft.PowerToys" spellcheck="false"><button class="primary-dialog-button" id="installCustomPackage">Ajouter</button></div>
+          <div class="profile-tools"><input id="profileName" placeholder="Nom du profil"><button class="secondary-dialog-button" id="saveProfile">Enregistrer le profil</button><select id="savedProfiles"><option value="">Profils enregistrés</option></select><button class="secondary-dialog-button" id="loadProfile">Charger</button></div>
+        </div>
+        <div class="installed-manager hidden" id="installedManager"><div><strong id="managedCount">0 logiciel sélectionné</strong><small>Sélectionnez les cases sur les applications installées pour une désinstallation groupée.</small></div><button class="danger-dialog-button" id="batchUninstallBtn" disabled>× Désinstaller la sélection</button></div>
         <div class="catalog-tools">
           <div class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Rechercher un logiciel..." autocomplete="off" /></div>
           <div class="filters" id="filters"></div>
@@ -207,7 +218,7 @@
           <span class="label">NETTOYAGE SÉCURISÉ</span>
           <div class="space-visual"><div class="disk-ring"><strong id="cleanupCount">4</strong><small>zones</small></div></div>
           <div class="safe-list"><span>✓ Aucun document personnel</span><span>✓ Confirmation avant suppression</span><span>✓ Résidus placés en quarantaine</span><span>✓ Aucun fichier ajouté au Bureau</span></div>
-          <button class="install-button cleanup-button" id="cleanupBtn"><span>▶</span> Exécuter le nettoyage</button>
+          <button class="install-button cleanup-button" id="cleanupBtn"><span>⌕</span> Analyser avant nettoyage</button>
           <p>L'espace récupéré dépend du contenu actuel de votre ordinateur.</p>
         </aside>
       </div>
@@ -224,6 +235,39 @@
       <div class="quarantine-list" id="quarantineList"><div class="quarantine-loading"><span>↻</span> Analyse de la quarantaine...</div></div>
       <div class="quarantine-empty hidden" id="quarantineEmpty"><span>✓</span><h3>La quarantaine est vide</h3><p>Aucun ancien dossier n'attend votre décision.</p></div>
       <div class="danger-note"><span>!</span><div><strong>Vérifiez le fonctionnement de vos applications avant une suppression définitive</strong><p>La restauration remet le dossier à son emplacement d'origine. La suppression définitive ne pourra pas être annulée.</p></div></div>
+    </section>
+
+    <section class="view" id="tools">
+      <div class="page-intro"><span class="label">CENTRE D'OUTILS</span><h1>Diagnostic et maintenance</h1><p>Contrôlez WinGet, créez un point de restauration et examinez le système avant toute modification.</p></div>
+      <div class="tools-grid">
+        <article class="tool-panel"><span class="tool-icon blue">W</span><div><h3>Diagnostic WinGet</h3><p id="wingetDiagnosticText">Vérifiez le gestionnaire et ses sources.</p><div class="tool-progress hidden" id="wingetToolProgress"><div><i></i></div><b>0%</b></div><div class="tool-actions"><button class="secondary-dialog-button" id="diagnoseWinget">Diagnostiquer</button><button class="primary-dialog-button" id="repairWinget">Réparer WinGet</button></div></div></article>
+        <article class="tool-panel"><span class="tool-icon green">↶</span><div><h3>Point de restauration</h3><p id="restorePointText">Créez un point avant une opération importante.</p><p class="tool-help">Pour revenir à un point existant, ouvrez l’assistant Windows, choisissez le point « PC Setup », puis vérifiez les programmes concernés avant de confirmer.</p><div class="tool-progress hidden" id="restoreToolProgress"><div><i></i></div><b>0%</b></div><div class="tool-actions"><button class="primary-dialog-button" id="createRestorePoint">Créer maintenant</button><button class="secondary-dialog-button" id="openSystemRestore">Restaurer mon PC</button></div></div></article>
+        <article class="tool-panel"><span class="tool-icon violet">↥</span><div><h3>Applications au démarrage</h3><p>Consultez les programmes détectés puis gérez-les dans la page officielle de Windows.</p><div class="tool-progress hidden" id="startupToolProgress"><div><i></i></div><b>0%</b></div><div class="tool-actions"><button class="secondary-dialog-button" id="scanStartup">Analyser</button><button class="primary-dialog-button" id="openStartupSettings">Gérer dans Windows</button></div></div></article>
+        <article class="tool-panel"><span class="tool-icon orange">◇</span><div><h3>Occupation du disque</h3><p>Analyse en lecture seule des principaux dossiers de votre profil.</p><div class="tool-progress hidden" id="diskToolProgress"><div><i></i></div><b>0%</b></div><div class="tool-actions"><button class="primary-dialog-button" id="scanDisk">Analyser le disque</button></div></div></article>
+      </div>
+      <div class="tool-results">
+        <section><div class="section-heading"><div><span class="label">DÉMARRAGE</span><h2>Éléments détectés</h2></div></div><div class="system-list" id="startupList"><p class="tool-empty">Lancez une analyse.</p></div></section>
+        <section><div class="section-heading"><div><span class="label">STOCKAGE</span><h2>Dossiers les plus volumineux</h2></div></div><div class="system-list" id="diskList"><p class="tool-empty">Aucune analyse effectuée.</p></div></section>
+      </div>
+      <div class="history-panel">
+        <div class="section-heading"><div><span class="label">HISTORIQUE LOCAL</span><h2>Dernières opérations</h2></div><button class="text-button" id="refreshHistory">↻ Actualiser</button></div>
+        <div class="system-list" id="operationHistory"><p class="tool-empty">Chargement de l'historique...</p></div>
+      </div>
+    </section>
+
+    <section class="view" id="security">
+      <div class="page-intro security-intro"><div><span class="label">PROTECTION LOCALE</span><h1>Centre de sécurité</h1><p>Contrôlez l’intégrité de PC Setup, ses droits et ses composants avant une opération sensible.</p></div><button class="primary-dialog-button" id="refreshSecurity">↻ Actualiser</button></div>
+      <div class="security-overview"><div class="security-score"><span>♢</span><div><strong id="securityHeadline">Analyse en cours...</strong><small id="securityVersion">PC Setup</small></div></div><div class="security-mode"><span>ÉLÉVATION</span><strong id="securityElevation">À la demande</strong><small>L’interface reste en droits standards.</small></div></div>
+      <div class="security-grid">
+        <article><span class="security-icon green">✓</span><div><small>INTERFACE</small><strong id="securityIntegrity">Vérification...</strong><em>Empreinte des ressources intégrées</em></div></article>
+        <article><span class="security-icon blue">◎</span><div><small>ORIGINE WEBVIEW2</small><strong id="securityOrigin">Vérification...</strong><em>Commandes limitées à pcsetup.local</em></div></article>
+        <article><span class="security-icon violet">♙</span><div><small>SIGNATURE</small><strong id="securitySignature">Vérification...</strong><em id="securitySigner">Identité de l’éditeur</em></div></article>
+        <article><span class="security-icon cyan">W</span><div><small>WINGET</small><strong id="securityWinget">Vérification...</strong><em>Gestionnaire de paquets Microsoft</em></div></article>
+        <article><span class="security-icon orange">◇</span><div><small>WEBVIEW2</small><strong id="securityWebView">Vérification...</strong><em>Moteur d’interface Evergreen</em></div></article>
+        <article><span class="security-icon green">▣</span><div><small>WORKER PROTÉGÉ</small><strong id="securityWorker">Vérification...</strong><em>Actions système élevées uniquement</em></div></article>
+      </div>
+      <div class="security-log-panel"><div><span class="label">TRAÇABILITÉ LOCALE</span><h2>Journaux de sécurité et d’activité</h2><p id="securityLogs">Chargement...</p></div><button class="secondary-dialog-button" data-view="tools">Consulter l’historique</button></div>
+      <div class="notice"><span>i</span><div><strong>Les opérations restent sous votre contrôle</strong><p>Une simulation est obligatoire avant le nettoyage ou la désinstallation. Une autorisation UAC séparée est demandée uniquement lorsque Windows exige les droits administrateur.</p></div></div>
     </section>
 
     <section class="view" id="queue">
@@ -244,9 +288,9 @@
       <div class="page-intro"><span class="label">MODE D'EMPLOI</span><h1>Installer en toute sécurité</h1><p>Le script utilise uniquement winget et les fonctions Windows intégrées.</p></div>
       <div class="steps">
         <article><b>01</b><div><h3>Composez votre sélection</h3><p>Choisissez un profil ou ajoutez les applications une à une depuis le catalogue.</p></div></article>
-        <article><b>02</b><div><h3>Générez le script</h3><p>PC Setup crée localement un fichier PowerShell lisible, sans envoyer aucune donnée.</p></div></article>
-        <article><b>03</b><div><h3>Exécutez en administrateur</h3><p>Clic droit sur le fichier, puis « Exécuter avec PowerShell ». Confirmez la demande Windows.</p></div></article>
-        <article><b>04</b><div><h3>Suivez l'installation</h3><p>Chaque étape s'affiche dans la console. Un échec n'empêche pas les autres installations.</p></div></article>
+        <article><b>02</b><div><h3>Vérifiez la simulation</h3><p>PC Setup présente les éléments concernés avant toute suppression ou opération de nettoyage.</p></div></article>
+        <article><b>03</b><div><h3>Confirmez l’opération</h3><p>L’autorisation administrateur Windows apparaît uniquement lorsqu’une fonction système en a réellement besoin.</p></div></article>
+        <article><b>04</b><div><h3>Consultez le résultat</h3><p>La progression reste visible dans l’application et un rapport local est enregistré pour chaque opération.</p></div></article>
       </div>
       <div class="notice"><span>i</span><div><strong>Avant de commencer</strong><p>Créez un point de restauration et fermez vos applications. Certains composants peuvent demander un redémarrage.</p></div></div>
     </section>
@@ -265,6 +309,7 @@
       <div class="dialog-confirm" id="installConfirmView">
         <p><strong id="modalAppCount">0 logiciel</strong> seront installés depuis les sources officielles winget.</p>
         <div class="dialog-checks"><span>✓ Téléchargement automatique</span><span>✓ Installation silencieuse</span><span>✓ Rapport rangé dans PC Setup</span></div>
+        <div class="install-preferences"><label for="installShortcutLocation"><span>Emplacement du raccourci</span><select id="installShortcutLocation"><option value="start">Menu Démarrer — recommandé</option><option value="desktop">Bureau</option><option value="both">Menu Démarrer et Bureau</option><option value="none">Aucun raccourci supplémentaire</option></select></label><label class="launch-after hidden" id="launchAfterOption"><input type="checkbox" id="launchAfterInstall"><span>Lancer l’application après l’installation</span></label><small id="portableInstallNotice">Les fichiers restent dans le dossier sécurisé choisi par WinGet ou l’éditeur.</small></div>
         <div class="dialog-warning"><span>i</span> Fermez les applications concernées avant de continuer.</div>
         <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelInstall">Annuler</button><button class="primary-dialog-button" id="confirmInstall"><span>▶</span> Commencer l'installation</button></div>
       </div>
@@ -320,10 +365,13 @@
       <div class="dialog-glow cleanup-dialog-glow"></div>
       <div class="dialog-header"><span class="dialog-logo cleanup-dialog-logo">◇</span><div><span class="label">ENTRETIEN DU DISQUE</span><h2 id="cleanupModalTitle">Libérer de l'espace</h2></div><button class="dialog-close" id="closeCleanupModal" aria-label="Fermer">×</button></div>
       <div class="dialog-confirm" id="cleanupConfirmView">
-        <p><strong id="cleanupModalCount">0 zone</strong> seront nettoyées. Vos documents personnels et votre dossier Téléchargements ne seront pas touchés.</p>
-        <div class="cleanup-confirm-card"><span>◇</span><div><strong>Nettoyage sécurisé</strong><small id="cleanupModalDetail">Fichiers temporaires et caches sélectionnés</small></div></div>
+        <div class="simulation-badge"><span>⌕</span><div><strong>MODE SIMULATION</strong><small>Aucune suppression pendant cet aperçu</small></div></div>
+        <p><strong id="cleanupModalCount">0 zone</strong> seront d'abord analysées. Rien ne sera supprimé pendant cette étape.</p>
+        <div class="cleanup-confirm-card"><span>⌕</span><div><strong id="cleanupAnalysisTitle">Analyse en cours...</strong><small id="cleanupModalDetail">Calcul de l'espace récupérable</small></div></div>
+        <div class="cleanup-analysis-list" id="cleanupAnalysisList"></div>
+        <div class="protected-folders hidden" id="protectedFolders"><strong>Dossiers protégés</strong><span id="protectedFoldersList"></span></div>
         <div class="dialog-warning cleanup-dialog-warning"><span>i</span> La Corbeille sera vidée si elle fait partie de votre sélection. Les résidus d'applications seront placés en quarantaine.</div>
-        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelCleanup">Annuler</button><button class="primary-dialog-button cleanup-confirm-button" id="confirmCleanup"><span>▶</span> Commencer le nettoyage</button></div>
+        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelCleanup">Annuler</button><button class="primary-dialog-button cleanup-confirm-button" id="confirmCleanup" disabled><span>▶</span> Nettoyer les éléments analysés</button></div>
       </div>
       <div class="dialog-progress hidden" id="cleanupProgressView">
         <div class="progress-status"><span class="pulse-dot cleanup-pulse"></span><div><strong id="cleanupProgressTitle">Préparation...</strong><small id="cleanupProgressDetail">Analyse des zones sélectionnées</small></div><b id="cleanupProgressPercent">0%</b></div>
@@ -336,11 +384,30 @@
     </div>
   </div>
 
+  <div class="install-modal hidden" id="repairModal" role="dialog" aria-modal="true" aria-labelledby="repairTitle">
+    <div class="install-dialog repair-dialog">
+      <div class="dialog-header"><span class="dialog-logo repair-logo">⚙</span><div><span class="label">MAINTENANCE DU LOGICIEL</span><h2 id="repairTitle">Réparer</h2></div><button class="dialog-close" id="closeRepairModal">×</button></div>
+      <div class="dialog-confirm" id="repairConfirmView">
+        <p>PC Setup demandera à WinGet de réparer <strong id="repairAppName"></strong> sans supprimer vos réglages lorsque l'installateur le permet.</p>
+        <div class="dialog-warning"><span>i</span> Si la réparation native n'existe pas, PC Setup tentera une réinstallation par-dessus la version actuelle, sans désinstallation préalable.</div>
+        <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelRepair">Annuler</button><button class="primary-dialog-button" id="confirmRepair"><span>⚙</span> Réparer</button></div>
+      </div>
+      <div class="dialog-progress hidden" id="repairProgressView">
+        <div class="progress-status"><span class="pulse-dot"></span><div><strong id="repairProgressTitle">Réparation en cours</strong><small id="repairProgressDetail">Veuillez patienter...</small></div></div>
+        <div class="progress-track"><i id="repairProgressBar"></i></div>
+        <div class="progress-summary" id="repairSummary">Ne fermez pas PC Setup pendant l'opération.</div>
+        <button class="primary-dialog-button hidden" id="finishRepair">Terminer</button>
+      </div>
+    </div>
+  </div>
+
   <div class="install-modal hidden" id="uninstallModal" role="dialog" aria-modal="true" aria-labelledby="uninstallTitle">
     <div class="install-dialog uninstall-dialog">
       <div class="dialog-header"><span class="dialog-logo uninstall-logo">×</span><div><span class="label">GESTION DU LOGICIEL</span><h2 id="uninstallTitle">Désinstaller</h2></div><button class="dialog-close" id="closeUninstallModal">×</button></div>
       <div class="dialog-confirm" id="uninstallConfirmView">
         <p>Vous êtes sur le point de désinstaller <strong id="uninstallAppName"></strong>.</p>
+        <div class="simulation-badge danger-simulation"><span>⌕</span><div><strong>SIMULATION AVANT DÉSINSTALLATION</strong><small id="uninstallSimulationStatus">Vérification du paquet et de ses accès...</small></div></div>
+        <div class="uninstall-preview" id="uninstallPreview"><div><span>Paquet</span><b id="uninstallPreviewPackage">—</b></div><div><span>Type</span><b id="uninstallPreviewScope">—</b></div><div><span>Raccourcis gérés</span><b id="uninstallPreviewShortcuts">—</b></div></div>
         <div class="dialog-warning danger-dialog-warning"><span>!</span> Les réglages locaux du logiciel peuvent également être supprimés.</div>
         <div class="dialog-actions"><button class="secondary-dialog-button" id="cancelUninstall">Annuler</button><button class="danger-dialog-button" id="confirmUninstall"><span>×</span> Désinstaller</button></div>
       </div>

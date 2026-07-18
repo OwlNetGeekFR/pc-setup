@@ -40,7 +40,11 @@ function Run-Step([string]$Label, [scriptblock]$Action) {
 function Clear-Folder([string]$Path, [string]$Label) {
     Run-Step $Label {
         if (Test-Path -LiteralPath $Path) {
-            Get-ChildItem -LiteralPath $Path -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            $root = Get-Item -LiteralPath $Path -Force -ErrorAction Stop
+            if (($root.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) { throw "Lien symbolique refuse : $Path" }
+            Get-ChildItem -LiteralPath $Path -Force -ErrorAction SilentlyContinue |
+                Where-Object { ($_.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0 } |
+                Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
         }
     }
 }
