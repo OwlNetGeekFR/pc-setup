@@ -122,6 +122,7 @@ let pendingRepairId = null;
 let pendingCleanupChoices = [];
 let availableUpdates = [];
 let selectedUpdates = new Set();
+let appUpdateReleasePage = "https://github.com/OwlNetGeekFR/OwlSetup/releases/latest";
 let updatesLoaded = false;
 let activeCategory = "Tout";
 let searchTerm = "";
@@ -768,12 +769,7 @@ function closeAppUpdateModal() {
 }
 
 function beginAppUpdate() {
-  if (!window.chrome?.webview) return;
-  $("#appUpdateModal").dataset.running = "true";
-  $("#closeAppUpdate").disabled = true;
-  $("#cancelAppUpdate").disabled = true;
-  $("#installAppUpdate").disabled = true;
-  window.chrome.webview.postMessage({action:"install-app-update", payload:{}});
+  window.open(appUpdateReleasePage, "_blank", "noopener");
 }
 
 function renderAppUpdateState(message) {
@@ -788,16 +784,18 @@ function renderAppUpdateState(message) {
     $("#appUpdateStateTitle").textContent = "Recherche d'une nouvelle version";
     $("#appUpdateStateDetail").textContent = "Lecture de la dernière Release GitHub...";
   } else if (message.status === "available") {
+    const officialRelease = "https://github.com/OwlNetGeekFR/OwlSetup/releases/";
+    appUpdateReleasePage = typeof message.page === "string" && message.page.startsWith(officialRelease) ? message.page : `${officialRelease}latest`;
     notification.classList.add("available");
     notification.title = `OwlSetup ${message.latest} est disponible`;
     notification.setAttribute("aria-label", `Mise à jour OwlSetup ${message.latest} disponible`);
     if (notification.dataset.notified !== message.latest) {
       notification.dataset.notified = message.latest;
-      notifyAction("Mise à jour disponible", `OwlSetup ${message.latest} peut être installé.`);
+      notifyAction("Mise à jour disponible", `OwlSetup ${message.latest} est disponible sur GitHub.`);
     }
     icon.textContent = "↓";
     $("#appUpdateStateTitle").textContent = `OwlSetup ${message.latest} est disponible`;
-    $("#appUpdateStateDetail").textContent = "La mise à jour peut être téléchargée et installée automatiquement.";
+    $("#appUpdateStateDetail").textContent = "Ouvrez la Release officielle GitHub pour télécharger cette version.";
     install.classList.remove("hidden"); install.disabled = false;
   } else if (message.status === "current") {
     notification.classList.remove("available");
