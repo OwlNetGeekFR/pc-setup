@@ -71,7 +71,7 @@ apps.push(
   {id:"Amazon.Games",name:"Amazon Games",category:"Gaming",desc:"Lanceur de jeux Amazon",icon:"AG",color:"#4b83c3",site:"https://www.amazongames.com/en-us/support/prime-gaming/articles/download-and-install-the-amazon-games-app",tags:["gaming"],repairMode:"reinstall"},
   {id:"Overwolf.CurseForge",name:"CurseForge",category:"Gaming",desc:"Gestion des mods de jeux",icon:"CF",color:"#ef6c35",site:"https://www.curseforge.com/download/app",tags:["gaming"],repairMode:"reinstall"},
   {id:"Oracle.VirtualBox",name:"Oracle VirtualBox",category:"Virtualisation",desc:"Machines virtuelles multiplateformes",icon:"VB",color:"#3276a8",site:"https://www.virtualbox.org/wiki/Downloads",repairMode:"reinstall"},
-  {id:"VMware.WorkstationPro",name:"VMware Workstation Pro",category:"Virtualisation",desc:"Machines virtuelles professionnelles",icon:"VM",color:"#e38b35",site:"https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion",repairMode:"reinstall"},
+  {id:"VMware.WorkstationPro",name:"VMware Workstation Pro",category:"Virtualisation",desc:"Compte Broadcom gratuit requis · installation guidée",icon:"VM",color:"#e38b35",site:"https://knowledge.broadcom.com/external/article/368667/download-and-license-vmware-desktop-hype.html",manualInstallUrl:"https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware%20Workstation%20Pro&freeDownloads=true",manualInstall:true,repairMode:"reinstall"},
   {id:"Microsoft.WSL",name:"Windows Subsystem for Linux",category:"Virtualisation",desc:"Environnement Linux intégré à Windows",icon:"WSL",color:"#5c7894",site:"https://learn.microsoft.com/windows/wsl/install",repairMode:"reinstall"}
 );
 
@@ -115,6 +115,7 @@ apps.forEach(app => app.logo = app.logo || (appLogos[app.id] ? `assets/logos/${a
 
 const categories = ["Tout", ...new Set(apps.map(app => app.category))];
 let selected = new Set(JSON.parse(localStorage.getItem("pcsetup-selection") || "[]"));
+apps.filter(app => app.manualInstall).forEach(app => selected.delete(app.id));
 let installedApps = new Set();
 let managedInstalled = new Set();
 let pendingUninstallId = null;
@@ -151,9 +152,9 @@ function renderApps() {
   const visible = apps.filter(app => (activeCategory === "Tout" || app.category === activeCategory) && `${app.name} ${app.desc} ${app.category}`.toLocaleLowerCase("fr").includes(query));
   $("#resultCount").textContent = `${visible.length} logiciel${visible.length > 1 ? "s" : ""}`;
   $("#appGrid").innerHTML = visible.map(app => `
-    <article class="app-card ${selected.has(app.id) ? "selected" : ""} ${installedApps.has(app.id) ? "installed" : ""}" data-app="${app.id}" tabindex="0" aria-label="${app.name}">
+    <article class="app-card ${selected.has(app.id) ? "selected" : ""} ${installedApps.has(app.id) ? "installed" : ""} ${app.manualInstall ? "manual-install" : ""}" data-app="${app.id}" tabindex="0" aria-label="${app.name}">
       ${icon(app)}<span class="app-copy"><strong>${app.name}</strong><small>${app.desc}</small><span class="app-footer"><em>${app.category}</em><a class="official-link" href="${app.site}" target="_blank" rel="noopener" title="Ouvrir le site officiel de ${app.name}" onclick="event.stopPropagation()">Site officiel ↗</a></span></span>
-      ${installedApps.has(app.id) ? `<span class="installed-actions"><button class="manage-icon ${managedInstalled.has(app.id) ? "active" : ""}" data-manage-installed="${app.id}" title="Sélectionner pour une désinstallation groupée">${managedInstalled.has(app.id) ? "✓" : "□"}</button><button class="repair-icon" data-repair="${app.id}" title="Réparer ${app.name}">⚙</button><button class="uninstall-icon" data-uninstall="${app.id}" title="Désinstaller ${app.name}">×</button></span><span class="repair-capability">${app.repairMode === "native" ? "Réparation native" : "Réinstallation réparatrice"}</span><span class="installed-badge">✓ Installé</span>` : `<span class="add-icon">${selected.has(app.id) ? "✓" : "+"}</span>`}
+      ${installedApps.has(app.id) ? `<span class="installed-actions"><button class="manage-icon ${managedInstalled.has(app.id) ? "active" : ""}" data-manage-installed="${app.id}" title="Sélectionner pour une désinstallation groupée">${managedInstalled.has(app.id) ? "✓" : "□"}</button><button class="repair-icon" data-repair="${app.id}" title="Réparer ${app.name}">⚙</button><button class="uninstall-icon" data-uninstall="${app.id}" title="Désinstaller ${app.name}">×</button></span><span class="repair-capability">${app.repairMode === "native" ? "Réparation native" : "Réinstallation réparatrice"}</span><span class="installed-badge">✓ Installé</span>` : app.manualInstall ? `<span class="manual-install-badge">Installation guidée</span><span class="add-icon">↗</span>` : `<span class="add-icon">${selected.has(app.id) ? "✓" : "+"}</span>`}
     </article>`).join("");
   $("#emptyState").classList.toggle("hidden", visible.length !== 0);
   $("#installedManager").classList.toggle("hidden", installedApps.size === 0);
@@ -177,6 +178,11 @@ function renderSelection() {
 function toggleApp(id) {
   const app = apps.find(item => item.id === id);
   if (installedApps.has(id)) return;
+  if (app?.manualInstall) {
+    notify("Installation guidée", "Broadcom demande une connexion gratuite et l’acceptation de ses conditions. Ouverture du portail officiel.");
+    window.open(app.manualInstallUrl || app.site, "_blank", "noopener");
+    return;
+  }
   if (selected.has(id)) selected.delete(id); else {
     selected.add(id);
     notify("Ajouté à la sélection", app.name);
@@ -270,7 +276,7 @@ function saveProfile() {
 function loadProfile() {
   const value=$("#savedProfiles").value;if(!value)return;
   const name=decodeURIComponent(value),profiles=JSON.parse(localStorage.getItem("pcsetup-profiles") || "{}");
-  selected=new Set((profiles[name]||[]).filter(id=>!installedApps.has(id)));
+  selected=new Set((profiles[name]||[]).filter(id=>!installedApps.has(id) && !apps.some(app=>app.id===id && app.manualInstall)));
   renderApps();renderSelection();notify("Profil chargé",name);
 }
 
@@ -1023,7 +1029,7 @@ function handleInstallMessage(message) {
   }
   if (message.type === "config-imported") {
     const known = new Set(apps.map(app => app.id.toLocaleLowerCase()));
-    const restored = (message.packages || []).filter(id => known.has(String(id).toLocaleLowerCase()) && !installedApps.has(id));
+    const restored = (message.packages || []).filter(id => known.has(String(id).toLocaleLowerCase()) && !installedApps.has(id) && !apps.some(app=>app.id===id && app.manualInstall));
     selected = new Set(restored);
     document.querySelectorAll("[data-cleanup]").forEach(input => { input.checked = (message.cleanup || []).includes(input.dataset.cleanup); });
     updateCleanupCount(); renderApps(); renderSelection(); showView("queue");

@@ -109,6 +109,7 @@ body{font-size:15px}
 .preset strong{font-size:14px}.preset small,.preset>b{font-size:11px}
 .search input{font-size:13px}.filter,.results-line{font-size:11px}
 .app-card{min-height:120px}.app-copy strong{font-size:13px}.app-copy small{font-size:10px;line-height:1.5}.app-copy em,.official-link{font-size:9px}.installed-badge{font-size:9px}.repair-capability{font-size:8px}
+.app-card.manual-install{border-color:#4b3f2c}.app-card.manual-install:hover{border-color:#b8873d}.manual-install-badge{position:absolute;right:14px;bottom:12px;padding:4px 7px;border:1px solid #765c31;border-radius:999px;background:#2a2114;color:#f0bd67;font-size:8px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.app-card.manual-install .add-icon{color:#f0bd67;border-color:#765c31}
 .config-toolbar>div:first-child strong{font-size:13px}.config-toolbar>div:first-child small{font-size:10px}
 .custom-install strong{font-size:11px}.custom-install input,.profile-tools input,.profile-tools select{font-size:10px}
 .installed-manager strong{font-size:12px}.installed-manager small{font-size:10px}
