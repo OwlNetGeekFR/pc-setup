@@ -14,6 +14,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
@@ -789,6 +790,53 @@ internal sealed class WebAppForm : Form
         return Regex.Replace(text,@"\s+"," ").Trim();
     }
 
+    bool IsSuccessfulUninstallCode(int code)
+    {
+        return code==0 || code==3010 || code==1641;
+    }
+
+    bool IsPackageStillInstalled(string packageId,StringBuilder report)
+    {
+        try
+        {
+            var wingetReport=new StringBuilder();
+            int listCode=RunHiddenProcess("winget.exe","list --id \""+packageId+"\" --exact --accept-source-agreements --disable-interactivity",wingetReport);
+            string listOutput=wingetReport.ToString();
+            report.AppendLine("Verification WinGet apres desinstallation : "+listCode);
+            if(listCode==0 && listOutput.IndexOf(packageId,StringComparison.OrdinalIgnoreCase)>=0)return true;
+        }
+        catch(Exception ex){report.AppendLine("Verification WinGet impossible : "+ex.Message);}
+        try
+        {
+            var catalog=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
+            catalog[packageId]=LoadApplicationName(packageId);
+            var requested=new HashSet<string>(StringComparer.OrdinalIgnoreCase);requested.Add(packageId);
+            var installed=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            DetectInstalledFromRegistry(catalog,requested,installed);
+            return installed.Contains(packageId);
+        }
+        catch(Exception ex){report.AppendLine("Verification du registre impossible : "+ex.Message);return true;}
+    }
+
+    int RunUninstallWithFallbacks(string packageId,StringBuilder report)
+    {
+        string common="uninstall --id \""+packageId+"\" --exact --silent --accept-source-agreements --disable-interactivity";
+        report.AppendLine("Tentative 1/3 : contexte Windows actuel.");
+        int code=RunHiddenProcess("winget.exe",common,report);
+        if(IsSuccessfulUninstallCode(code))return code;
+
+        report.AppendLine();
+        report.AppendLine("Tentative 2/3 : installation machine avec autorisation administrateur.");
+        int machineCode=RunElevatedProcess(ResolveWingetPath(),common+" --scope machine",report);
+        if(IsSuccessfulUninstallCode(machineCode))return machineCode;
+
+        report.AppendLine();
+        report.AppendLine("Tentative 3/3 : installation liee au compte Windows.");
+        int userCode=RunAsInteractiveUser(ResolveWingetPath(),common+" --scope user",report);
+        if(IsSuccessfulUninstallCode(userCode))return userCode;
+        return userCode!=-1?userCode:(machineCode!=-1?machineCode:code);
+    }
+
     string ExplainWingetFailure(int code,string output,string operation)
     {
         if(code==0)return "Operation terminee avec succes.";
@@ -872,15 +920,19 @@ internal sealed class WebAppForm : Form
                 report.AppendLine("Date : "+DateTime.Now.ToString("G"));
                 report.AppendLine("Logiciel : "+packageId);
                 report.AppendLine();
-                string uninstallArguments="uninstall --id \""+packageId+"\" --exact --silent --accept-source-agreements --disable-interactivity";
-                code=RunHiddenProcess("winget.exe",uninstallArguments,report);
-                if(code==unchecked((int)0x8A15007D))
+                code=RunUninstallWithFallbacks(packageId,report);
+                success=IsSuccessfulUninstallCode(code);
+                if(success)
                 {
-                    report.AppendLine();
-                    report.AppendLine("Paquet installe pour l'utilisateur : nouvelle tentative sans elevation administrateur.");
-                    code=RunAsInteractiveUser(ResolveWingetPath(),uninstallArguments,report);
+                    for(int attempt=0;attempt<5 && IsPackageStillInstalled(packageId,report);attempt++)Thread.Sleep(750);
+                    success=!IsPackageStillInstalled(packageId,report);
+                    if(!success)report.AppendLine("Le logiciel est encore detecte apres la desinstallation.");
                 }
-                success=code==0;
+                else if(!IsPackageStillInstalled(packageId,report))
+                {
+                    report.AppendLine("Le logiciel n'est plus detecte malgre le code de sortie retourne.");
+                    success=true;
+                }
                 if(success)RemoveManagedShortcuts(packageId,report);
                 report.AppendLine();
                 report.AppendLine("Code de sortie : "+code);
@@ -1004,9 +1056,16 @@ internal sealed class WebAppForm : Form
                     SendToWeb(new { type="batch-uninstall-progress",id=id,index=i+1,total=packages.Length });
                     report.AppendLine();report.AppendLine("===== "+id+" =====");
                     int itemStart=report.Length;
-                    int code=RunHiddenProcess("winget.exe","uninstall --id \""+id+"\" --exact --silent --accept-source-agreements --disable-interactivity",report);
+                    int code=RunUninstallWithFallbacks(id,report);
                     string itemOutput=report.ToString(itemStart,report.Length-itemStart);
-                    bool ok=code==0;if(ok){success++;RemoveManagedShortcuts(id,report);}else failed++;
+                    bool ok=IsSuccessfulUninstallCode(code);
+                    if(ok)
+                    {
+                        for(int attempt=0;attempt<5 && IsPackageStillInstalled(id,report);attempt++)Thread.Sleep(750);
+                        ok=!IsPackageStillInstalled(id,report);
+                    }
+                    else if(!IsPackageStillInstalled(id,report))ok=true;
+                    if(ok){success++;RemoveManagedShortcuts(id,report);}else failed++;
                     SendToWeb(new { type="batch-uninstall-item",id=id,success=ok,index=i+1,total=packages.Length,code=code,errorMessage=ok?"":ExplainWingetFailure(code,itemOutput,"desinstallation") });
                 }
             }

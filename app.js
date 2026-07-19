@@ -137,6 +137,7 @@ let onboardingStep = 0;
 let onboardingPreviousFocus = null;
 
 const $ = selector => document.querySelector(selector);
+
 const icon = app => `<span class="app-icon" style="--app:${app.color}">${app.logo ? `<img src="${app.logo}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="app-icon-fallback" hidden>${app.icon}</span>` : `<span class="app-icon-fallback">${app.icon}</span>`}</span>`;
 const save = () => localStorage.setItem("pcsetup-selection", JSON.stringify([...selected]));
 
@@ -1383,7 +1384,7 @@ document.addEventListener("click", event => {
     if(managedInstalled.has(id))managedInstalled.delete(id);else managedInstalled.add(id);
     renderApps();
   }
-  if (installedCard && !uninstall && !repair) {
+  if (installedCard && !uninstall && !repair && !manageInstalled) {
     const id=installedCard.dataset.installedApp;
     if(managedInstalled.has(id))managedInstalled.delete(id);else managedInstalled.add(id);
     renderApps();
@@ -1513,6 +1514,5 @@ $("#recommendedCleanup").addEventListener("click", () => {
   updateCleanupCount();
 });
 $("#mobileMenu").addEventListener("click", () => document.body.classList.toggle("menu-open"));
-
 refreshProfiles(); renderFilters(); renderApps(); renderSelection();
 window.setTimeout(() => openOnboarding(false), 650);

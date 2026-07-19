@@ -61,7 +61,7 @@ Le script télécharge le package Microsoft WebView2 nécessaire, compile l’ap
 Pour créer le véritable installateur utilisateur avec Inno Setup 6 :
 
 ```powershell
-./build-installer.ps1 -Version 3.5.0
+./build-installer.ps1 -Version 3.5.1
 ```
 
 L'installateur place OwlSetup dans `%LOCALAPPDATA%\Programs\OwlSetup`, crée le raccourci du Menu Démarrer et enregistre la désinstallation dans Windows.
@@ -69,10 +69,10 @@ L'installateur place OwlSetup dans `%LOCALAPPDATA%\Programs\OwlSetup`, crée le 
 Pour préparer localement tous les fichiers d'une version stable sans les publier :
 
 ```powershell
-./build-stable.ps1 -Version 3.5.0
+./build-stable.ps1 -Version 3.5.1
 ```
 
-Le dossier `artifacts\stable\3.5.0` contient alors l'application portable, l'installateur et leurs empreintes dans `SHA256.txt`.
+Le dossier `artifacts\stable\3.5.1` contient alors l'application portable, l'installateur et leurs empreintes dans `SHA256.txt`.
 
 ### Publier une version stable
 
